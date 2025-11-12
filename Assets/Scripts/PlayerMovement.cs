@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Detección de suelo")]
     public Transform groundCheck;
     public float groundDistance = 0.5f;
-    public LayerMask groundMask;
+    public LayerMask groundMask;   // Suelo
+    public LayerMask wallMask;     // Nueva capa para paredes/columnas
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -25,9 +26,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Detección de suelo (solo hacia abajo)
+        // Detección de suelo (solo hacia abajo, ignorando paredes)
         RaycastHit hit;
-        bool grounded = Physics.Raycast(groundCheck.position, Vector3.down, out hit, groundDistance + 0.1f, groundMask);
+        bool grounded = Physics.Raycast(
+            groundCheck.position,
+            Vector3.down,
+            out hit,
+            groundDistance + 0.1f,
+            groundMask
+        );
+
+        // Confirmar que la superficie es suelo (normal apuntando hacia arriba)
         isGrounded = grounded && Vector3.Angle(hit.normal, Vector3.up) < 45f;
 
         // Reiniciar velocidad vertical si está en el suelo
@@ -43,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
         controller.Move(move * speed * Time.deltaTime);
 
-        // Saltar
+        // Saltar (solo si está en suelo, no en pared)
         if (Input.GetButtonDown("Jump") && isGrounded)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
