@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections; // Necesario para usar corutinas
 
 public class DoorInteraction : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class DoorInteraction : MonoBehaviour
     public float rotationAngle = 90f;
     public float rotationSpeed = 3f;
     public LayerMask interactionLayer;
+    public float autoCloseDelay = 3f; // Tiempo en segundos antes de que se cierre sola
 
     private bool isOpen = false;
     private bool isMoving = false;
@@ -18,12 +20,11 @@ public class DoorInteraction : MonoBehaviour
     {
         closedRotation = pivot.rotation;
         openRotation = closedRotation * Quaternion.Euler(rotationAngle, 0, 0);
-
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isMoving)
+        if (Input.GetKeyDown(KeyCode.E) && !isMoving && !isOpen)
         {
             TryInteract();
         }
@@ -39,17 +40,12 @@ public class DoorInteraction : MonoBehaviour
                 isMoving = false;
             }
         }
-        Debug.Log("Rotando hacia: " + (isOpen ? "abierto" : "cerrado"));
 
+        // Debug.Log("Rotando hacia: " + (isOpen ? "abierto" : "cerrado"));
     }
 
     void TryInteract()
     {
-        // if (handle == null)
-        // {
-        //     Debug.LogError("Handle no está asignado en el Inspector.");
-        //     return;
-        // }
         Camera cam = Camera.main;
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
@@ -58,10 +54,23 @@ public class DoorInteraction : MonoBehaviour
         {
             if (hit.transform == handle || hit.transform.IsChildOf(handle))
             {
-                isOpen = !isOpen;
+                // Solo abrir la puerta
+                isOpen = true;
                 isMoving = true;
+
+                // Iniciar corutina para cerrarla automáticamente
+                StartCoroutine(AutoCloseDoor());
             }
         }
-        // Debug.Log("Intentando interactuar con: " + hit.transform.name);
+    }
+
+    IEnumerator AutoCloseDoor()
+    {
+        // Espera unos segundos antes de cerrar
+        yield return new WaitForSeconds(autoCloseDelay);
+
+        // Cierra la puerta automáticamente
+        isOpen = false;
+        isMoving = true;
     }
 }
