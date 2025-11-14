@@ -4,8 +4,9 @@ using System.Collections;
 public class DoorInteraction : MonoBehaviour
 {
     [Header("Referencias")]
-    public Transform pivot;   // Empty que rota
-    public Transform handle;  // Manija
+    public Transform pivot;       // Empty que rota
+    public Transform handle;      // Manija
+    public Transform lockPiece;   // Chapa
 
     [Header("Configuración")]
     public float interactionDistance = 2.5f;
@@ -18,8 +19,6 @@ public class DoorInteraction : MonoBehaviour
     private bool isMoving = false;
     private Quaternion closedRotation;
     private Quaternion openRotation;
-
-    // Estado local: ¿esta puerta es la dueña actual del prompt?
     private bool ownsPrompt = false;
 
     void Start()
@@ -58,19 +57,18 @@ public class DoorInteraction : MonoBehaviour
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
 
-        bool lookingAtHandle = false;
+        bool lookingAtHandleOrLock = false;
 
         if (Physics.Raycast(ray, out hit, interactionDistance, interactionLayer))
         {
-            if (hit.transform == handle || hit.transform.IsChildOf(handle))
+            if (IsValidInteractor(hit.transform))
             {
-                lookingAtHandle = true;
+                lookingAtHandleOrLock = true;
             }
         }
 
-        if (lookingAtHandle && !isOpen)
+        if (lookingAtHandleOrLock && !isOpen)
         {
-            // Mostrar y marcar propiedad si no la teníamos
             if (!ownsPrompt && OpenDoorPromptManager.Instance != null)
             {
                 OpenDoorPromptManager.Instance.ShowPrompt(this, "Presiona [E] para abrir");
@@ -79,7 +77,6 @@ public class DoorInteraction : MonoBehaviour
         }
         else
         {
-            // Si esta puerta era la dueña, ahora libera y oculta
             if (ownsPrompt && OpenDoorPromptManager.Instance != null)
             {
                 OpenDoorPromptManager.Instance.HidePrompt(this);
@@ -98,23 +95,26 @@ public class DoorInteraction : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactionDistance, interactionLayer))
         {
-            if (hit.transform == handle || hit.transform.IsChildOf(handle))
+            if (IsValidInteractor(hit.transform))
             {
                 isOpen = true;
                 isMoving = true;
 
-                // Al abrir, ocultar prompt global
                 if (OpenDoorPromptManager.Instance != null)
                 {
                     OpenDoorPromptManager.Instance.ForceHide();
                 }
 
-                // Esta puerta ya no posee el prompt
                 ownsPrompt = false;
-
                 StartCoroutine(AutoCloseDoor());
             }
         }
+    }
+
+    bool IsValidInteractor(Transform target)
+    {
+        return target == handle || target.IsChildOf(handle) ||
+               target == lockPiece || target.IsChildOf(lockPiece);
     }
 
     IEnumerator AutoCloseDoor()

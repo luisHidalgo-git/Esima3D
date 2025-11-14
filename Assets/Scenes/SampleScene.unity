@@ -329,6 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 869526755}
   handle: {fileID: 1054459299}
+  lockPiece: {fileID: 1295727056}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -4444,6 +4445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 41180977}
   handle: {fileID: 410650040}
+  lockPiece: {fileID: 1436741082}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -4580,6 +4582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 995952797}
   handle: {fileID: 821741202}
+  lockPiece: {fileID: 776508724}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -6357,7 +6360,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -6884,6 +6887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 460595496}
   handle: {fileID: 1822656244}
+  lockPiece: {fileID: 1058761459}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -8155,7 +8159,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -13254,7 +13258,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -13478,7 +13482,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -14977,6 +14981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 722232654}
   handle: {fileID: 1968825481}
+  lockPiece: {fileID: 1054446931}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -15225,6 +15230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 1917552547}
   handle: {fileID: 1692072727}
+  lockPiece: {fileID: 669863119}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -15704,7 +15710,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -16915,7 +16921,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -18966,7 +18972,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -22058,6 +22064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 1110858181}
   handle: {fileID: 1015643973}
+  lockPiece: {fileID: 1647052809}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
