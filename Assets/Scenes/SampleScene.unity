@@ -329,7 +329,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 869526755}
   handle: {fileID: 1054459299}
-  promptText: {fileID: 1479837565}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -3736,6 +3735,7 @@ GameObject:
   - component: {fileID: 425081743}
   - component: {fileID: 425081742}
   - component: {fileID: 425081741}
+  - component: {fileID: 425081745}
   m_Layer: 5
   m_Name: OpenDoor
   m_TagString: Untagged
@@ -3826,6 +3826,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &425081745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425081740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2456295f85ab68b228a077604806d7c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpenDoorPromptManager
+  DoorPromptText: {fileID: 1479837565}
 --- !u!1 &427849803
 GameObject:
   m_ObjectHideFlags: 0
@@ -4431,7 +4444,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 41180977}
   handle: {fileID: 410650040}
-  promptText: {fileID: 0}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -4568,7 +4580,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 995952797}
   handle: {fileID: 821741202}
-  promptText: {fileID: 0}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -6873,7 +6884,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 460595496}
   handle: {fileID: 1822656244}
-  promptText: {fileID: 1479837565}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -14967,7 +14977,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 722232654}
   handle: {fileID: 1968825481}
-  promptText: {fileID: 0}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -15216,7 +15225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 1917552547}
   handle: {fileID: 1692072727}
-  promptText: {fileID: 0}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
@@ -22050,7 +22058,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorInteraction
   pivot: {fileID: 1110858181}
   handle: {fileID: 1015643973}
-  promptText: {fileID: 0}
   interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
