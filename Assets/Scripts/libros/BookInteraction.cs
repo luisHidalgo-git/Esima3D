@@ -4,7 +4,7 @@ public class BookInteraction : MonoBehaviour
 {
     [Header("Configuración")]
     public float interactionDistance = 2.5f;
-    public LayerMask interactionLayer; // Debe incluir "Book" u objetos recolectables
+    public LayerMask interactionLayer; // Debe incluir la capa de los libros
 
     private bool ownsPrompt = false;
     private bool isCollected = false;
@@ -69,17 +69,17 @@ public class BookInteraction : MonoBehaviour
             {
                 isCollected = true;
 
+                // Ocultar el prompt
                 if (CollectPromptManager.Instance != null)
-                {
                     CollectPromptManager.Instance.ForceHide();
-                }
 
                 ownsPrompt = false;
 
-                // Aquí puedes añadir lógica de inventario
-                Debug.Log("Libro recolectado: " + gameObject.name);
+                // Notificar al contador global
+                if (BookManager.Instance != null)
+                    BookManager.Instance.RegisterCollection();
 
-                // Desactivar o destruir el objeto
+                // Desactivar el objeto
                 gameObject.SetActive(false);
             }
         }

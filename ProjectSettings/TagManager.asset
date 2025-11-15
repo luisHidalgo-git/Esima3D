@@ -8,6 +8,7 @@ TagManager:
   - Door
   - Chapa
   - Manija
+  - Book
   layers:
   - Default
   - TransparentFX
