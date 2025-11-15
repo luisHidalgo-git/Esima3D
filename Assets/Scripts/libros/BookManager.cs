@@ -37,7 +37,7 @@ public class BookManager : MonoBehaviour
     {
         if (BooksCounterText != null)
         {
-            BooksCounterText.text = $"BOOKS: {collectedBooks}/{totalBooks}";
+            BooksCounterText.text = $"{collectedBooks}/{totalBooks}";
         }
     }
 }
