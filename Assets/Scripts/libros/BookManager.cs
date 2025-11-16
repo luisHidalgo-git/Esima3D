@@ -10,6 +10,7 @@ public class BookManager : MonoBehaviour
 
     [Header("Configuración")]
     public string bookTag = "Book"; // O usa Layer si prefieres
+
     private int totalBooks = 0;
     private int collectedBooks = 0;
 
@@ -23,7 +24,6 @@ public class BookManager : MonoBehaviour
         // Detectar todos los libros por Tag
         GameObject[] books = GameObject.FindGameObjectsWithTag(bookTag);
         totalBooks = books.Length;
-
         UpdateUI();
     }
 
@@ -39,5 +39,11 @@ public class BookManager : MonoBehaviour
         {
             BooksCounterText.text = $"{collectedBooks}/{totalBooks}";
         }
+    }
+
+    // ✅ NUEVO MÉTODO: Verifica si todos los libros han sido recogidos
+    public bool InstanceLibrosCompletados()
+    {
+        return collectedBooks >= totalBooks;
     }
 }
