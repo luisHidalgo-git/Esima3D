@@ -85,8 +85,8 @@ public class BookInteraction : MonoBehaviour
                 // ✅ Mostrar la hoja asociada al libro
                 if (PageUIManager.Instance != null)
                 {
-                    PageUIManager.Instance.ShowPage(pageSprite);
-                }
+    PageUIManager.Instance.ShowNextPage(); // ✅ muestra la página según el orden predefinido
+}
 
                 // Desactivar el objeto libro
                 gameObject.SetActive(false);

@@ -1,46 +1,73 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PageUIManager : MonoBehaviour
 {
     public static PageUIManager Instance;
 
     [Header("UI")]
-    public GameObject pagePanel;   // Panel o Image que muestra la hoja
-    public Image pageImage;        // La imagen de la hoja
-    public Sprite defaultPage;     // Sprite por defecto si no asignas otro
+    public GameObject pagePanel;
+    public Image pageImage;
 
+    [Header("Configuración")]
+    public int totalPages = 8; // ✅ Número total de páginas
+
+    private List<Sprite> orderedPages = new List<Sprite>();
+    private int currentPageIndex = 0;
     private bool isPageOpen = false;
 
     void Awake()
     {
         Instance = this;
+
         if (pagePanel != null)
             pagePanel.SetActive(false);
+
+        // ✅ Cargar automáticamente los sprites nombrados Pagina1, Pagina2, ..., Pagina8
+        for (int i = 1; i <= totalPages; i++)
+        {
+            Sprite page = Resources.Load<Sprite>($"Pagina{i}");
+            if (page != null)
+            {
+                orderedPages.Add(page);
+            }
+            else
+            {
+                Debug.LogWarning($"No se encontró el sprite Pagina{i} en Resources.");
+            }
+        }
     }
 
     void Update()
     {
-        if (isPageOpen && Input.GetKeyDown(KeyCode.Space)) // tecla para cerrar
+        if (isPageOpen && Input.GetKeyDown(KeyCode.Space))
         {
             ClosePage();
         }
     }
 
-    public void ShowPage(Sprite customPage = null)
+    public void ShowNextPage()
     {
-        if (pagePanel == null) return;
+        if (currentPageIndex >= orderedPages.Count)
+        {
+            Debug.LogWarning("No hay más páginas para mostrar.");
+            return;
+        }
+
+        Sprite nextPage = orderedPages[currentPageIndex];
+        currentPageIndex++;
+
+        ShowPage(nextPage);
+    }
+
+    private void ShowPage(Sprite page)
+    {
+        if (pagePanel == null || pageImage == null) return;
 
         pagePanel.SetActive(true);
         isPageOpen = true;
-
-        if (pageImage != null)
-        {
-            pageImage.sprite = customPage != null ? customPage : defaultPage;
-        }
-
-        // Opcional: pausar el juego mientras lees
-        // Time.timeScale = 0f;
+        pageImage.sprite = page;
     }
 
     public void ClosePage()
@@ -49,8 +76,10 @@ public class PageUIManager : MonoBehaviour
 
         pagePanel.SetActive(false);
         isPageOpen = false;
+    }
 
-        // Opcional: reanudar el juego
-        // Time.timeScale = 1f;
+    public void ResetPages()
+    {
+        currentPageIndex = 0;
     }
 }
