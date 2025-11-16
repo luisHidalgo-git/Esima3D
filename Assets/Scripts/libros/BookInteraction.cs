@@ -6,6 +6,9 @@ public class BookInteraction : MonoBehaviour
     public float interactionDistance = 2.5f;
     public LayerMask interactionLayer; // Debe incluir la capa de los libros
 
+    [Header("Página asociada")]
+    public Sprite pageSprite; // ✅ Asigna aquí la textura/hoja en el Inspector
+
     private bool ownsPrompt = false;
     private bool isCollected = false;
 
@@ -79,7 +82,13 @@ public class BookInteraction : MonoBehaviour
                 if (BookManager.Instance != null)
                     BookManager.Instance.RegisterCollection();
 
-                // Desactivar el objeto
+                // ✅ Mostrar la hoja asociada al libro
+                if (PageUIManager.Instance != null)
+                {
+                    PageUIManager.Instance.ShowPage(pageSprite);
+                }
+
+                // Desactivar el objeto libro
                 gameObject.SetActive(false);
             }
         }
