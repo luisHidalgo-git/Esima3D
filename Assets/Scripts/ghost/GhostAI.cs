@@ -30,7 +30,7 @@ public class GhostAI : MonoBehaviour
         // --- Ataque ---
         if (distance <= attackRange)
         {
-            agent.isStopped = true;// detener movimiento
+            agent.isStopped = true;  // detener movimiento
             anim.SetBool("Attack", true);
             anim.SetFloat("Speed", 0);
             transform.LookAt(player);
