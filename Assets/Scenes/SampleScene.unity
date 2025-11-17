@@ -442,7 +442,7 @@ MonoBehaviour:
   pivot: {fileID: 869526755}
   handle: {fileID: 1054459299}
   lockPiece: {fileID: 1295727056}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
@@ -757,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -1784,7 +1784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -5142,7 +5142,7 @@ MonoBehaviour:
   pivot: {fileID: 41180977}
   handle: {fileID: 410650040}
   lockPiece: {fileID: 1436741082}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
@@ -5279,13 +5279,61 @@ MonoBehaviour:
   pivot: {fileID: 995952797}
   handle: {fileID: 821741202}
   lockPiece: {fileID: 776508724}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
   autoCloseDelay: 3
+--- !u!1 &522705483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522705485}
+  - component: {fileID: 522705484}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &522705484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522705483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca545644f82c628abdd2aeb2ac95f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  sfxSource: {fileID: 2031560300}
+  pasosClip: {fileID: 8300000, guid: fb93081df6230b65bba7b022021d2369, type: 3}
+  papelClip: {fileID: 8300000, guid: b17b207b646950baf85f16b78b2e8937, type: 3}
+  puertaClip: {fileID: 8300000, guid: 89f4fa6486e2b519a924ef8e4f53548e, type: 3}
+--- !u!4 &522705485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522705483}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 42.24503, y: 27.97456, z: 33.95955}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &536357442
 GameObject:
   m_ObjectHideFlags: 0
@@ -7708,7 +7756,7 @@ MonoBehaviour:
   pivot: {fileID: 460595496}
   handle: {fileID: 1822656244}
   lockPiece: {fileID: 1058761459}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
@@ -12361,7 +12409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -12866,7 +12914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -16563,7 +16611,7 @@ MonoBehaviour:
   pivot: {fileID: 722232654}
   handle: {fileID: 1968825481}
   lockPiece: {fileID: 1054446931}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
@@ -16639,7 +16687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -16944,7 +16992,7 @@ MonoBehaviour:
   pivot: {fileID: 1917552547}
   handle: {fileID: 1692072727}
   lockPiece: {fileID: 669863119}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
@@ -17132,7 +17180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -22756,6 +22804,7 @@ GameObject:
   - component: {fileID: 1802750335}
   - component: {fileID: 1802750338}
   - component: {fileID: 1802750339}
+  - component: {fileID: 1802750340}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -22909,6 +22958,14 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!81 &1802750340
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802750333}
+  m_Enabled: 1
 --- !u!1 &1817935955
 GameObject:
   m_ObjectHideFlags: 0
@@ -23607,7 +23664,7 @@ MonoBehaviour:
   pivot: {fileID: 1110858181}
   handle: {fileID: 1015643973}
   lockPiece: {fileID: 1647052809}
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   rotationAngle: 90
   rotationSpeed: 3
   interactionLayer:
@@ -24212,9 +24269,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 128
   maxStamina: 5
   staminaDrainRate: 1
   staminaRecoveryRate: 0.5
@@ -24460,7 +24514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7265ec6e55f850eca9443d70b95fd65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BookInteraction
-  interactionDistance: 2.5
+  interactionDistance: 0.5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -24874,6 +24928,135 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004735812}
   m_Mesh: {fileID: -2474506453394372257, guid: feb74ea9c2f183902baa17f8c6d9732d, type: 3}
+--- !u!1 &2031560299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2031560301}
+  - component: {fileID: 2031560300}
+  m_Layer: 0
+  m_Name: Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &2031560300
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031560299}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &2031560301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031560299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 42.24503, y: 27.97456, z: 33.95955}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &2039584229
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25367,3 +25550,5 @@ SceneRoots:
   - {fileID: 74954463}
   - {fileID: 1739879938}
   - {fileID: 1255729797}
+  - {fileID: 2031560301}
+  - {fileID: 522705485}

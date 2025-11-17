@@ -9,7 +9,7 @@ public class BookManager : MonoBehaviour
     public TextMeshProUGUI BooksCounterText;
 
     [Header("Configuración")]
-    public string bookTag = "Book"; // O usa Layer si prefieres
+    public string bookTag = "Book";
 
     private int totalBooks = 0;
     private int collectedBooks = 0;
@@ -21,7 +21,6 @@ public class BookManager : MonoBehaviour
 
     void Start()
     {
-        // Detectar todos los libros por Tag
         GameObject[] books = GameObject.FindGameObjectsWithTag(bookTag);
         totalBooks = books.Length;
         UpdateUI();
@@ -31,17 +30,17 @@ public class BookManager : MonoBehaviour
     {
         collectedBooks++;
         UpdateUI();
+
+        // 🔊 Sonido de recoger libro
+        AudioManager.Instance.PlayPaper();
     }
 
     void UpdateUI()
     {
         if (BooksCounterText != null)
-        {
             BooksCounterText.text = $"{collectedBooks}/{totalBooks}";
-        }
     }
 
-    // ✅ NUEVO MÉTODO: Verifica si todos los libros han sido recogidos
     public bool InstanceLibrosCompletados()
     {
         return collectedBooks >= totalBooks;

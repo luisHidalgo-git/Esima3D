@@ -4,10 +4,8 @@ public class BookInteraction : MonoBehaviour
 {
     [Header("Configuración")]
     public float interactionDistance = 2.5f;
-    public LayerMask interactionLayer; // Debe incluir la capa de los libros
-
-    [Header("Página asociada")]
-    public Sprite pageSprite; // ✅ Asigna aquí la textura/hoja en el Inspector
+    public LayerMask interactionLayer;
+    public Sprite pageSprite;
 
     private bool ownsPrompt = false;
     private bool isCollected = false;
@@ -17,9 +15,7 @@ public class BookInteraction : MonoBehaviour
         MostrarMensaje();
 
         if (Input.GetKeyDown(KeyCode.E) && !isCollected)
-        {
             TryCollect();
-        }
     }
 
     void MostrarMensaje()
@@ -35,9 +31,7 @@ public class BookInteraction : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionDistance, interactionLayer))
         {
             if (hit.transform == transform)
-            {
                 lookingAtBook = true;
-            }
         }
 
         if (lookingAtBook && !isCollected)
@@ -72,23 +66,20 @@ public class BookInteraction : MonoBehaviour
             {
                 isCollected = true;
 
-                // Ocultar el prompt
                 if (CollectPromptManager.Instance != null)
                     CollectPromptManager.Instance.ForceHide();
 
                 ownsPrompt = false;
 
-                // Notificar al contador global
                 if (BookManager.Instance != null)
                     BookManager.Instance.RegisterCollection();
 
-                // ✅ Mostrar la hoja asociada al libro
                 if (PageUIManager.Instance != null)
-                {
-    PageUIManager.Instance.ShowNextPage(); // ✅ muestra la página según el orden predefinido
-}
+                    PageUIManager.Instance.ShowNextPage();
 
-                // Desactivar el objeto libro
+                // 🔊 Sonido al recoger con E
+                AudioManager.Instance.PlayPaper();
+
                 gameObject.SetActive(false);
             }
         }

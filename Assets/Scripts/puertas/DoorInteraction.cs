@@ -100,6 +100,9 @@ public class DoorInteraction : MonoBehaviour
                 isOpen = true;
                 isMoving = true;
 
+                // 🔊 Sonido de abrir puerta
+                AudioManager.Instance.PlayDoor();
+
                 if (OpenDoorPromptManager.Instance != null)
                 {
                     OpenDoorPromptManager.Instance.ForceHide();
@@ -122,5 +125,8 @@ public class DoorInteraction : MonoBehaviour
         yield return new WaitForSeconds(autoCloseDelay);
         isOpen = false;
         isMoving = true;
+
+        // 🔊 Sonido de cerrar puerta
+        AudioManager.Instance.PlayDoor();
     }
 }

@@ -11,7 +11,7 @@ public class PageUIManager : MonoBehaviour
     public Image pageImage;
 
     [Header("Configuración")]
-    public int totalPages = 8; // ✅ Número total de páginas
+    public int totalPages = 8;
 
     private List<Sprite> orderedPages = new List<Sprite>();
     private int currentPageIndex = 0;
@@ -24,27 +24,20 @@ public class PageUIManager : MonoBehaviour
         if (pagePanel != null)
             pagePanel.SetActive(false);
 
-        // ✅ Cargar automáticamente los sprites nombrados Pagina1, Pagina2, ..., Pagina8
         for (int i = 1; i <= totalPages; i++)
         {
             Sprite page = Resources.Load<Sprite>($"Pagina{i}");
             if (page != null)
-            {
                 orderedPages.Add(page);
-            }
             else
-            {
                 Debug.LogWarning($"No se encontró el sprite Pagina{i} en Resources.");
-            }
         }
     }
 
     void Update()
     {
         if (isPageOpen && Input.GetKeyDown(KeyCode.Space))
-        {
             ClosePage();
-        }
     }
 
     public void ShowNextPage()
@@ -68,6 +61,9 @@ public class PageUIManager : MonoBehaviour
         pagePanel.SetActive(true);
         isPageOpen = true;
         pageImage.sprite = page;
+
+        // 🔊 Sonido de abrir página
+        AudioManager.Instance.PlayPaper();
     }
 
     public void ClosePage()
@@ -76,6 +72,9 @@ public class PageUIManager : MonoBehaviour
 
         pagePanel.SetActive(false);
         isPageOpen = false;
+
+        // 🔊 Sonido de cerrar página
+        AudioManager.Instance.PlayPaper();
     }
 
     public void ResetPages()
