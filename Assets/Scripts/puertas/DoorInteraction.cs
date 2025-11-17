@@ -130,3 +130,4 @@ public class DoorInteraction : MonoBehaviour
         AudioManager.Instance.PlayDoor();
     }
 }
+// 
