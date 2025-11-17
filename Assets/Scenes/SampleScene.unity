@@ -9320,25 +9320,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &836256868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 836256860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1308959385bb5443cb95bcf51665958b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostAI
-  player: {fileID: 1914987185}
-  detectionRange: 10
-  attackRange: 2
-  speedWalk: 1.5
-  speedRun: 3.5
-  wanderRadius: 5
-  wanderInterval: 4
 --- !u!1 &848175884 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 66c48ee51e3cad3fb999c199207b549d, type: 3}
@@ -24573,9 +24554,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 167e0f28af4dc0bbeb6bde1b7c3aa3e4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 836256867}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 167e0f28af4dc0bbeb6bde1b7c3aa3e4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 836256868}
   m_SourcePrefab: {fileID: 100100000, guid: 167e0f28af4dc0bbeb6bde1b7c3aa3e4, type: 3}
 --- !u!1 &2125165725 stripped
 GameObject:
