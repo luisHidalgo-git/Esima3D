@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class GhostSpawner : MonoBehaviour
 {
@@ -7,14 +6,10 @@ public class GhostSpawner : MonoBehaviour
     [SerializeField] private GameObject ghostPrefab; // Prefab del fantasma
     [SerializeField] private Transform[] spawnPoints; // Puntos de reaparición
 
-    [Header("Respawn Settings")]
-    [SerializeField] private float respawnDelay = 5f; // Tiempo antes de reaparecer
     private GameObject currentGhost;
 
-    private void Start()
-    {
-        SpawnGhost();
-    }
+    // ❌ Eliminamos el SpawnGhost() en Start/Awake
+    // El fantasma NO debe aparecer automáticamente al inicio
 
     public void SpawnGhost()
     {
@@ -30,11 +25,5 @@ public class GhostSpawner : MonoBehaviour
 
         // Instancia el fantasma en ese punto
         currentGhost = Instantiate(ghostPrefab, spawnPoint.position, spawnPoint.rotation);
-    }
-
-    // Ejemplo: llamar este método cuando el fantasma muera
-    public void RespawnGhost()
-    {
-        Invoke(nameof(SpawnGhost), respawnDelay);
     }
 }
