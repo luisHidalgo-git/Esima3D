@@ -234,7 +234,7 @@ public class GhostAI : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist <= attackRadius + 0.2f)
         {
-            // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
+        // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
         }
     }
 
