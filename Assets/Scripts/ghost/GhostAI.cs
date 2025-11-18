@@ -37,6 +37,8 @@ public class GhostAI : MonoBehaviour
     private bool isAttacking;
     private float lastAttackTime;
 
+    private bool hasPlayedDetectSound = false; // 👻 bandera para sonido de detección
+
     private enum GhostState { Wander, Chase, Attack }
     private GhostState state = GhostState.Wander;
 
@@ -76,6 +78,12 @@ public class GhostAI : MonoBehaviour
                 {
                     state = GhostState.Chase;
                     SetRunMode();
+
+                    if (!hasPlayedDetectSound)
+                    {
+                        AudioManager.Instance?.PlayGhostDetect();
+                        hasPlayedDetectSound = true;
+                    }
                 }
                 break;
 
@@ -86,6 +94,7 @@ public class GhostAI : MonoBehaviour
                     state = GhostState.Wander;
                     SetWalkMode();
                     StartIdlePhase();
+                    hasPlayedDetectSound = false; // reset sonido
                 }
                 else if (distToPlayer <= attackRadius)
                 {
@@ -234,7 +243,7 @@ public class GhostAI : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist <= attackRadius + 0.2f)
         {
-        // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
+            // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
         }
     }
 

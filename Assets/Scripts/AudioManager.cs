@@ -8,9 +8,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource sfxSource; // Fuente para efectos de sonido
 
     [Header("Clips")]
-    public AudioClip pasosClip;   // Pasos (caminar/correr)
-    public AudioClip papelClip;   // Papel (recoger libro, abrir/cerrar página)
-    public AudioClip puertaClip;  // Puerta (abrir/cerrar puerta)
+    public AudioClip pasosClip;    // Pasos (caminar/correr)
+    public AudioClip papelClip;    // Papel (recoger libro, abrir/cerrar página)
+    public AudioClip puertaClip;   // Puerta (abrir/cerrar puerta)
+    public AudioClip ghostDetectClip; // 👻 Fantasma detecta al jugador
 
     void Awake()
     {
@@ -33,21 +34,27 @@ public class AudioManager : MonoBehaviour
             sfxSource.PlayOneShot(clip);
     }
 
-    // 🔊 Pasos (usa el clip Pasos.mp3)
+    // 🔊 Pasos
     public void PlayFootstep()
     {
         PlaySound(pasosClip);
     }
 
-    // 🔊 Papel (recoger libro, abrir/cerrar página)
+    // 🔊 Papel
     public void PlayPaper()
     {
         PlaySound(papelClip);
     }
 
-    // 🔊 Puerta (abrir/cerrar puerta)
+    // 🔊 Puerta
     public void PlayDoor()
     {
         PlaySound(puertaClip);
+    }
+
+    // 🔊 Fantasma detecta al jugador
+    public void PlayGhostDetect()
+    {
+        PlaySound(ghostDetectClip);
     }
 }

@@ -5281,6 +5281,7 @@ MonoBehaviour:
   pasosClip: {fileID: 8300000, guid: fb93081df6230b65bba7b022021d2369, type: 3}
   papelClip: {fileID: 8300000, guid: b17b207b646950baf85f16b78b2e8937, type: 3}
   puertaClip: {fileID: 8300000, guid: 89f4fa6486e2b519a924ef8e4f53548e, type: 3}
+  ghostDetectClip: {fileID: 8300000, guid: c0a8eec4aa7881eaa99d8bd3e03a7da7, type: 3}
 --- !u!4 &522705485
 Transform:
   m_ObjectHideFlags: 0
