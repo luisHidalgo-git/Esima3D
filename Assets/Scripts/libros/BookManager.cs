@@ -63,10 +63,10 @@ public class BookManager : MonoBehaviour
     void UpdateUI()
     {
         if (BooksCounterText != null)
-            BooksCounterText.text = $"BOOKS: {collectedBooks}/{totalBooks}";
+            BooksCounterText.text = $"{collectedBooks}/{totalBooks}";
 
         if (ProtectionCounterText != null)
-            ProtectionCounterText.text = $"PROTECCIÓN: {protectionCharges}";
+            ProtectionCounterText.text = $"{protectionCharges}";
     }
 
     public bool InstanceLibrosCompletados()
