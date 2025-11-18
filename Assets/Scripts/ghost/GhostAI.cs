@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -44,7 +45,6 @@ public class GhostAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        // Ajustes iniciales del agente
         agent.updateRotation = true;
         agent.updatePosition = true;
         agent.stoppingDistance = attackRadius * 0.9f;
@@ -58,20 +58,16 @@ public class GhostAI : MonoBehaviour
     {
         if (player == null)
         {
-            // Intenta encontrar el jugador por tag, si no fue asignado
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null) player = p.transform;
         }
 
-        // Calcular distancia y rangos
         float distToPlayer = player ? Vector3.Distance(transform.position, player.position) : Mathf.Infinity;
         playerInRange = distToPlayer <= detectionRadius;
 
-        // Actualizar Animator con parámetros simples
         animator.SetBool("PlayerInRange", playerInRange);
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        // FSM
         switch (state)
         {
             case GhostState.Wander:
@@ -89,12 +85,12 @@ public class GhostAI : MonoBehaviour
                 {
                     state = GhostState.Wander;
                     SetWalkMode();
-                    StartIdlePhase(); // al salir de persecución, regresa a patrón idle/walk
+                    StartIdlePhase();
                 }
                 else if (distToPlayer <= attackRadius)
                 {
                     state = GhostState.Attack;
-                    BeginAttack();
+                    HandleDetectionOrAttack(distToPlayer);
                 }
                 break;
 
@@ -104,10 +100,9 @@ public class GhostAI : MonoBehaviour
         }
     }
 
-    // --- Wander (idle/walk aleatorio) ---
+    // --- Wander ---
     private void HandleWander()
     {
-        // Alterna entre pequeñas fases de idle y destinos aleatorios de walk
         if (isIdling)
         {
             agent.isStopped = true;
@@ -120,10 +115,8 @@ public class GhostAI : MonoBehaviour
             return;
         }
 
-        // Caminando hacia un punto aleatorio
         if (!agent.hasPath || agent.remainingDistance <= agent.stoppingDistance)
         {
-            // Decide si entra en otra fase idle o elige nuevo destino
             if (Time.time >= nextWanderTime)
             {
                 if (Random.value < 0.5f)
@@ -142,7 +135,6 @@ public class GhostAI : MonoBehaviour
         agent.isStopped = true;
         float idleDur = Random.Range(idleDurationMin, idleDurationMax);
         nextIdleEndTime = Time.time + idleDur;
-        // Speed ~ 0, el Animator irá a Idle por la condición de Speed
     }
 
     private void PickRandomWanderDestination()
@@ -159,7 +151,6 @@ public class GhostAI : MonoBehaviour
         }
         else
         {
-            // Si falla, intenta cerca del propio agente
             agent.SetDestination(transform.position + (transform.forward * 1f));
         }
     }
@@ -186,7 +177,21 @@ public class GhostAI : MonoBehaviour
 
         agent.isStopped = false;
         agent.SetDestination(player.position);
-        // Animator: PlayerInRange = true, Speed = agent.velocity.magnitude → Run por transición
+    }
+
+    // --- Protección sobrenatural o ataque ---
+    private void HandleDetectionOrAttack(float distToPlayer)
+    {
+        if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
+        {
+            agent.isStopped = true;
+            animator.SetBool("IsAttacking", false);
+            StartCoroutine(RespawnAfterProtection());
+        }
+        else
+        {
+            BeginAttack();
+        }
     }
 
     // --- Attack ---
@@ -195,12 +200,11 @@ public class GhostAI : MonoBehaviour
         isAttacking = true;
         animator.SetBool("IsAttacking", true);
         agent.isStopped = true;
-        lastAttackTime = Time.time; // para cooldown
+        lastAttackTime = Time.time;
     }
 
     private void HandleAttack(float distToPlayer)
     {
-        // Si el jugador está fuera de rango de ataque, vuelve a perseguir
         if (distToPlayer > attackRadius)
         {
             EndAttack();
@@ -210,10 +214,8 @@ public class GhostAI : MonoBehaviour
             return;
         }
 
-        // Gestiona el cooldown para repetir ataques si sigues cerca
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            // Reinicia el clip de ataque
             animator.Play("Attack", 0, 0f);
             lastAttackTime = Time.time;
         }
@@ -225,8 +227,6 @@ public class GhostAI : MonoBehaviour
         animator.SetBool("IsAttacking", false);
     }
 
-    // Llamado por Animation Event en el clip Attack (en el frame de impacto)
-    // Añade un evento en la animación que llame a "DealDamage"
     public void DealDamage()
     {
         if (player == null) return;
@@ -234,13 +234,21 @@ public class GhostAI : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.position);
         if (dist <= attackRadius + 0.2f)
         {
-            // Aquí llamarías a tu sistema de vida del jugador
-            // Ejemplo:
             // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
         }
     }
 
-    // Gizmos para depuración visual
+    private IEnumerator RespawnAfterProtection()
+    {
+        yield return new WaitForSeconds(2f);
+
+        GhostSpawner spawner = FindObjectOfType<GhostSpawner>();
+        if (spawner != null)
+            spawner.SpawnGhost();
+
+        Destroy(gameObject);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;

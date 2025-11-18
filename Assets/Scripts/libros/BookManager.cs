@@ -7,16 +7,18 @@ public class BookManager : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI BooksCounterText;
+    public TextMeshProUGUI ProtectionCounterText; // 👈 Nuevo contador en UI
 
     [Header("Configuración")]
     public string bookTag = "Book";
+    public int booksToTriggerGhost = 2;
 
     [Header("Fantasma")]
-    public GhostSpawner ghostSpawner; // referencia al spawner
-    public int booksToTriggerGhost = 2; // número de libros necesarios
+    public GhostSpawner ghostSpawner;
 
     private int totalBooks = 0;
     private int collectedBooks = 0;
+    private int protectionCharges = 0;
     private bool ghostSpawned = false;
 
     void Awake()
@@ -34,30 +36,37 @@ public class BookManager : MonoBehaviour
     public void RegisterCollection()
     {
         collectedBooks++;
+        protectionCharges++; // 👻 Gana una carga de protección
         UpdateUI();
 
-        // 🔊 Sonido de recoger libro
         AudioManager.Instance.PlayPaper();
 
-        // 👻 Aparición del fantasma después del segundo libro
         if (!ghostSpawned && collectedBooks >= booksToTriggerGhost)
         {
             ghostSpawned = true;
             if (ghostSpawner != null)
-            {
                 ghostSpawner.SpawnGhost();
-            }
-            else
-            {
-                Debug.LogWarning("GhostSpawner no asignado en BookManager.");
-            }
         }
+    }
+
+    public bool TryConsumeProtection()
+    {
+        if (protectionCharges > 0)
+        {
+            protectionCharges--;
+            UpdateUI();
+            return true;
+        }
+        return false;
     }
 
     void UpdateUI()
     {
         if (BooksCounterText != null)
-            BooksCounterText.text = $"{collectedBooks}/{totalBooks}";
+            BooksCounterText.text = $"BOOKS: {collectedBooks}/{totalBooks}";
+
+        if (ProtectionCounterText != null)
+            ProtectionCounterText.text = $"PROTECCIÓN: {protectionCharges}";
     }
 
     public bool InstanceLibrosCompletados()
