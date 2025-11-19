@@ -2840,6 +2840,81 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7713693573691078104, guid: ae4f9ae5960a816e3819ad0556f7422b, type: 3}
+--- !u!1 &244111101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244111102}
+  - component: {fileID: 244111104}
+  - component: {fileID: 244111103}
+  m_Layer: 5
+  m_Name: Stickman
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &244111102
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244111101}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 327770018}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 81, y: 44}
+  m_SizeDelta: {x: 40, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &244111103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244111101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5089118186336cb1082b1568b5ddd448, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &244111104
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244111101}
+  m_CullTransparentMesh: 1
 --- !u!1 &277876437 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -920241279820998894, guid: 66c48ee51e3cad3fb999c199207b549d, type: 3}
@@ -3417,6 +3492,11 @@ Transform:
   - {fileID: 1807706045}
   m_Father: {fileID: 2066046822}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &327770018 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6507002739855738208, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+  m_PrefabInstance: {fileID: 3065822385344390624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &329962479
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5522,6 +5602,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522705485}
   - component: {fileID: 522705484}
+  - component: {fileID: 522705486}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -5542,10 +5623,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   sfxSource: {fileID: 2031560300}
+  bgmSource: {fileID: 2031560300}
   pasosClip: {fileID: 8300000, guid: fb93081df6230b65bba7b022021d2369, type: 3}
   papelClip: {fileID: 8300000, guid: b17b207b646950baf85f16b78b2e8937, type: 3}
   puertaClip: {fileID: 8300000, guid: 89f4fa6486e2b519a924ef8e4f53548e, type: 3}
   ghostDetectClip: {fileID: 8300000, guid: c0a8eec4aa7881eaa99d8bd3e03a7da7, type: 3}
+  backgroundClip: {fileID: 8300000, guid: 817878e52e96493b6a8d87b86d4c4a7e, type: 3}
 --- !u!4 &522705485
 Transform:
   m_ObjectHideFlags: 0
@@ -5561,6 +5644,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522705486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522705483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4132642a41e770a898cd3cfacb923374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicStarter
 --- !u!1 &524280766
 GameObject:
   m_ObjectHideFlags: 0
@@ -27494,6 +27589,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3414154278732652787, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414154278732652787, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 178419629a5f8e414961922ae2e5137a, type: 3}
     - target: {fileID: 4525101967952716945, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_fontSize
       value: 25
@@ -27516,7 +27619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4743390597488976556, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 249.4879
+      value: 227.94
       objectReference: {fileID: 0}
     - target: {fileID: 4743390597488976556, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_SizeDelta.y
@@ -27524,11 +27627,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4743390597488976556, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 4.1708
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4743390597488976556, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.4258
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4854768308056216942, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -27707,8 +27810,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 381304084}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5862157884445928793, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6507002739855738208, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 244111102}
     - targetCorrespondingSourceObject: {fileID: 693371954815249120, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2103301943}

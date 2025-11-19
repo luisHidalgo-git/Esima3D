@@ -7,7 +7,6 @@ public class MusicStarter : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayBackgroundMusic();
-            Debug.Log("🎵 Música de fondo iniciada");
         }
         else
         {
