@@ -27,6 +27,9 @@ public class GhostAI : MonoBehaviour
     [SerializeField] private float attackCooldown = 1.2f;
     [SerializeField] private int attackDamage = 10;
 
+    [Header("Protección")]
+    [SerializeField] private float freezeBeforeDespawnDuration = 0.5f;
+
     private NavMeshAgent agent;
     private Animator animator;
 
@@ -37,7 +40,8 @@ public class GhostAI : MonoBehaviour
     private bool isAttacking;
     private float lastAttackTime;
 
-    private bool hasPlayedDetectSound = false; // 👻 bandera para sonido de detección
+    private bool hasPlayedDetectSound = false;
+    private bool isProcessingProtection = false;
 
     private enum GhostState { Wander, Chase, Attack }
     private GhostState state = GhostState.Wander;
@@ -58,6 +62,8 @@ public class GhostAI : MonoBehaviour
 
     private void Update()
     {
+        if (isProcessingProtection) return;
+
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -76,6 +82,9 @@ public class GhostAI : MonoBehaviour
                 HandleWander();
                 if (playerInRange)
                 {
+                    if (CheckAndConsumeProtection())
+                        return;
+
                     state = GhostState.Chase;
                     SetRunMode();
 
@@ -94,12 +103,11 @@ public class GhostAI : MonoBehaviour
                     state = GhostState.Wander;
                     SetWalkMode();
                     StartIdlePhase();
-                    hasPlayedDetectSound = false; // reset sonido
+                    hasPlayedDetectSound = false;
                 }
                 else if (distToPlayer <= attackRadius)
                 {
                     state = GhostState.Attack;
-                    HandleDetectionOrAttack(distToPlayer);
                 }
                 break;
 
@@ -109,7 +117,6 @@ public class GhostAI : MonoBehaviour
         }
     }
 
-    // --- Wander ---
     private void HandleWander()
     {
         if (isIdling)
@@ -179,7 +186,6 @@ public class GhostAI : MonoBehaviour
         agent.speed = runSpeed;
     }
 
-    // --- Chase ---
     private void HandleChase(float distToPlayer)
     {
         if (player == null) return;
@@ -188,32 +194,21 @@ public class GhostAI : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    // --- Protección sobrenatural o ataque ---
-    private void HandleDetectionOrAttack(float distToPlayer)
+    private bool CheckAndConsumeProtection()
     {
         if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
         {
-            agent.isStopped = true;
-            animator.SetBool("IsAttacking", false);
             StartCoroutine(RespawnAfterProtection());
+            return true;
         }
-        else
-        {
-            BeginAttack();
-        }
-    }
-
-    // --- Attack ---
-    private void BeginAttack()
-    {
-        isAttacking = true;
-        animator.SetBool("IsAttacking", true);
-        agent.isStopped = true;
-        lastAttackTime = Time.time;
+        return false;
     }
 
     private void HandleAttack(float distToPlayer)
     {
+        if (CheckAndConsumeProtection())
+            return;
+
         if (distToPlayer > attackRadius)
         {
             EndAttack();
@@ -223,11 +218,24 @@ public class GhostAI : MonoBehaviour
             return;
         }
 
+        if (!isAttacking)
+        {
+            BeginAttack();
+        }
+
         if (Time.time - lastAttackTime >= attackCooldown)
         {
             animator.Play("Attack", 0, 0f);
             lastAttackTime = Time.time;
         }
+    }
+
+    private void BeginAttack()
+    {
+        isAttacking = true;
+        animator.SetBool("IsAttacking", true);
+        agent.isStopped = true;
+        lastAttackTime = Time.time;
     }
 
     private void EndAttack()
@@ -249,11 +257,18 @@ public class GhostAI : MonoBehaviour
 
     private IEnumerator RespawnAfterProtection()
     {
-        yield return new WaitForSeconds(2f);
+        isProcessingProtection = true;
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        animator.SetBool("IsAttacking", false);
+        animator.SetFloat("Speed", 0f);
 
-        GhostSpawner spawner = FindObjectOfType<GhostSpawner>();
-        if (spawner != null)
-            spawner.SpawnGhost();
+        yield return new WaitForSeconds(freezeBeforeDespawnDuration);
+
+        if (BookManager.Instance != null && BookManager.Instance.ghostSpawner != null)
+        {
+            BookManager.Instance.ghostSpawner.SpawnGhostFarthestFromPlayer(player);
+        }
 
         Destroy(gameObject);
     }

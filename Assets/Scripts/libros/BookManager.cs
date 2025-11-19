@@ -50,7 +50,7 @@ public class BookManager : MonoBehaviour
     {
         if (protectionCharges > 0)
         {
-            protectionCharges--;
+            protectionCharges--; // 👈 consume solo UNA protección
             UpdateUI();
             return true;
         }
