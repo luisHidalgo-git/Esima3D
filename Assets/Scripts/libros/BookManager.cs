@@ -7,7 +7,7 @@ public class BookManager : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI BooksCounterText;
-    public TextMeshProUGUI ProtectionCounterText; // 👈 Nuevo contador en UI
+    public TextMeshProUGUI ProtectionCounterText;
 
     [Header("Configuración")]
     public string bookTag = "Book";
@@ -28,15 +28,13 @@ public class BookManager : MonoBehaviour
 
     void Start()
     {
-        GameObject[] books = GameObject.FindGameObjectsWithTag(bookTag);
-        totalBooks = books.Length;
-        UpdateUI();
+        RecalculateTotalBooks();
     }
 
     public void RegisterCollection()
     {
         collectedBooks++;
-        protectionCharges++; // 👻 Gana una carga de protección
+        protectionCharges++;
         UpdateUI();
 
         AudioManager.Instance.PlayPaper();
@@ -44,8 +42,7 @@ public class BookManager : MonoBehaviour
         if (!ghostSpawned && collectedBooks >= booksToTriggerGhost)
         {
             ghostSpawned = true;
-            if (ghostSpawner != null)
-                ghostSpawner.SpawnGhost();
+            ghostSpawner?.SpawnGhost();
         }
     }
 
@@ -72,5 +69,19 @@ public class BookManager : MonoBehaviour
     public bool InstanceLibrosCompletados()
     {
         return collectedBooks >= totalBooks;
+    }
+
+    public void RecalculateTotalBooks()
+    {
+        GameObject[] books = GameObject.FindGameObjectsWithTag(bookTag);
+        totalBooks = 0;
+
+        foreach (GameObject book in books)
+        {
+            if (book.activeInHierarchy)
+                totalBooks++;
+        }
+
+        UpdateUI();
     }
 }
