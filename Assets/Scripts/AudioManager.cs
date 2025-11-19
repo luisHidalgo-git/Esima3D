@@ -4,22 +4,25 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    [Header("Audio Source")]
-    public AudioSource sfxSource; // Fuente para efectos de sonido
+    [Header("Audio Sources")]
+    public AudioSource sfxSource;   // Fuente para efectos de sonido
+    public AudioSource bgmSource;   // Fuente para música de fondo
 
-    [Header("Clips")]
-    public AudioClip pasosClip;    // Pasos (caminar/correr)
-    public AudioClip papelClip;    // Papel (recoger libro, abrir/cerrar página)
-    public AudioClip puertaClip;   // Puerta (abrir/cerrar puerta)
-    public AudioClip ghostDetectClip; // 👻 Fantasma detecta al jugador
+    [Header("Clips - SFX")]
+    public AudioClip pasosClip;
+    public AudioClip papelClip;
+    public AudioClip puertaClip;
+    public AudioClip ghostDetectClip;
+
+    [Header("Clips - BGM")]
+    public AudioClip backgroundClip; // 🎵 Música de fondo
 
     void Awake()
     {
-        // Singleton: asegura que solo haya un AudioManager
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // persiste entre escenas
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -27,34 +30,34 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // 🔊 Reproduce un clip específico
+    // 🔊 Reproduce un clip de efecto
     public void PlaySound(AudioClip clip)
     {
         if (clip != null && sfxSource != null)
             sfxSource.PlayOneShot(clip);
     }
 
-    // 🔊 Pasos
-    public void PlayFootstep()
+    // 🎵 Reproduce música de fondo
+    public void PlayBackgroundMusic()
     {
-        PlaySound(pasosClip);
+        if (backgroundClip != null && bgmSource != null)
+        {
+            bgmSource.clip = backgroundClip;
+            bgmSource.loop = true;   // Que se repita
+            bgmSource.Play();
+        }
     }
 
-    // 🔊 Papel
-    public void PlayPaper()
+    // 🎵 Detener música de fondo
+    public void StopBackgroundMusic()
     {
-        PlaySound(papelClip);
+        if (bgmSource != null && bgmSource.isPlaying)
+            bgmSource.Stop();
     }
 
-    // 🔊 Puerta
-    public void PlayDoor()
-    {
-        PlaySound(puertaClip);
-    }
-
-    // 🔊 Fantasma detecta al jugador
-    public void PlayGhostDetect()
-    {
-        PlaySound(ghostDetectClip);
-    }
+    // 🔊 Métodos específicos para tus SFX
+    public void PlayFootstep() => PlaySound(pasosClip);
+    public void PlayPaper() => PlaySound(papelClip);
+    public void PlayDoor() => PlaySound(puertaClip);
+    public void PlayGhostDetect() => PlaySound(ghostDetectClip);
 }
