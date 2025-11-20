@@ -7,11 +7,16 @@ public class FlashlightController : MonoBehaviour
 
     void Update()
     {
-        // Al presionar la tecla F, alterna la linterna
         if (Input.GetKeyDown(KeyCode.F))
         {
             isOn = !isOn;
             flashlight.enabled = isOn;
+
+            // 🔊 Llamar al AudioManager
+            if (isOn)
+                AudioManager.Instance.PlayFlashlightOn();
+            else
+                AudioManager.Instance.PlayFlashlightOff();
         }
     }
 }

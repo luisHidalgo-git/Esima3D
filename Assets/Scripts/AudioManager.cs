@@ -14,6 +14,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip puertaClip;
     public AudioClip ghostDetectClip;
 
+    [Header("Clips - Linterna")]
+    public AudioClip flashlightOnClip;
+    public AudioClip flashlightOffClip;
+
     [Header("Clips - BGM")]
     public AudioClip backgroundClip; // 🎵 Música de fondo
 
@@ -60,4 +64,8 @@ public class AudioManager : MonoBehaviour
     public void PlayPaper() => PlaySound(papelClip);
     public void PlayDoor() => PlaySound(puertaClip);
     public void PlayGhostDetect() => PlaySound(ghostDetectClip);
+
+    // 🔦 Métodos específicos para la linterna
+    public void PlayFlashlightOn() => PlaySound(flashlightOnClip);
+    public void PlayFlashlightOff() => PlaySound(flashlightOffClip);
 }

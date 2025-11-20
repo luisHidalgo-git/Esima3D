@@ -5755,6 +5755,8 @@ MonoBehaviour:
   papelClip: {fileID: 8300000, guid: b17b207b646950baf85f16b78b2e8937, type: 3}
   puertaClip: {fileID: 8300000, guid: 89f4fa6486e2b519a924ef8e4f53548e, type: 3}
   ghostDetectClip: {fileID: 8300000, guid: c0a8eec4aa7881eaa99d8bd3e03a7da7, type: 3}
+  flashlightOnClip: {fileID: 8300000, guid: 1437d157e053f8934846bb5fe00222cd, type: 3}
+  flashlightOffClip: {fileID: 8300000, guid: 1437d157e053f8934846bb5fe00222cd, type: 3}
   backgroundClip: {fileID: 8300000, guid: 1beb75776b0dcecf8b55629e2f810b7c, type: 3}
 --- !u!4 &522705485
 Transform:
