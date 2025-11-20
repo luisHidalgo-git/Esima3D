@@ -6,26 +6,43 @@ public class FlashlightBattery : MonoBehaviour
     [Header("Lógica de batería")]
     public float maxBattery = 100f;
     public float currentBattery = 100f;
-    public float drainRate = 10f; // por segundo
-    public bool flashlightOn = false;
+    public float drainRate = 2f; // Ajusta según el ritmo deseado
+    private bool flashlightOn = false;
 
     [Header("Referencias")]
     public Light flashlight;
-    public Image batteryBar; // UI tipo barra o caja
+    public Image batteryBar;
+
+    void Start()
+    {
+        flashlightOn = false;
+        if (flashlight != null)
+            flashlight.enabled = false;
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && currentBattery > 0f)
+        // Encender/apagar linterna si hay batería
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            flashlightOn = !flashlightOn;
-            flashlight.enabled = flashlightOn;
+            if (currentBattery > 0f)
+            {
+                flashlightOn = !flashlightOn;
+                flashlight.enabled = flashlightOn;
 
-            if (flashlightOn)
-                AudioManager.Instance.PlayFlashlightOn();
+                if (flashlightOn)
+                    AudioManager.Instance.PlayFlashlightOn();
+                else
+                    AudioManager.Instance.PlayFlashlightOff();
+            }
             else
+            {
+                // Opcional: sonido o mensaje de "sin batería"
                 AudioManager.Instance.PlayFlashlightOff();
+            }
         }
 
+        // Consumo de batería
         if (flashlightOn)
         {
             currentBattery -= drainRate * Time.deltaTime;

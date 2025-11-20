@@ -28421,7 +28421,6 @@ MonoBehaviour:
   maxBattery: 100
   currentBattery: 100
   drainRate: 1
-  flashlightOn: 0
   flashlight: {fileID: 721375542}
   batteryBar: {fileID: 733895733}
 --- !u!1 &1917552546
