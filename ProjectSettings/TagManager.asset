@@ -9,6 +9,7 @@ TagManager:
   - Chapa
   - Manija
   - Book
+  - Flashlight
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Wall
   - Book
   - Player
-  - 
+  - Interactables
   - 
   - 
   - 
