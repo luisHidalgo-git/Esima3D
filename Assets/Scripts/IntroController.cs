@@ -14,9 +14,10 @@ public class IntroController : MonoBehaviour
     }
 
     [Header("UI")]
-    public Image imageUI;               // Imagen del slide
-    public TMP_Text textUI;            // Texto del slide
-    public CanvasGroup canvasGroup;    // CanvasGroup del SlideGroup (imagen + texto)
+    public Image imageUI;
+    public TMP_Text textUI;
+    public CanvasGroup canvasGroup;
+    public GameObject textBubble;
 
     [Header("Slides")]
     public IntroSlide[] slides;
@@ -31,6 +32,7 @@ public class IntroController : MonoBehaviour
     private int currentIndex = 0;
     private float timer = 0f;
     private bool isFading = false;
+    private bool isTyping = false;
 
     void Start()
     {
@@ -40,7 +42,6 @@ public class IntroController : MonoBehaviour
             return;
         }
 
-        // 🎵 Inicia música de fondo
         if (bgmSource != null && backgroundClip != null)
         {
             bgmSource.clip = backgroundClip;
@@ -53,7 +54,7 @@ public class IntroController : MonoBehaviour
 
     void Update()
     {
-        if (slides == null || slides.Length == 0) return;
+        if (slides == null || slides.Length == 0 || isTyping) return;
 
         timer += Time.deltaTime;
 
@@ -74,16 +75,27 @@ public class IntroController : MonoBehaviour
     void ShowSlide(int index)
     {
         imageUI.sprite = slides[index].image;
-        textUI.text = slides[index].text;
-        timer = 0f;
         canvasGroup.alpha = 1f;
+        timer = 0f;
+
+        string currentText = slides[index].text?.Trim();
+
+        if (string.IsNullOrEmpty(currentText))
+        {
+            textUI.text = "";
+            if (textBubble != null) textBubble.SetActive(false);
+        }
+        else
+        {
+            if (textBubble != null) textBubble.SetActive(true);
+            StartCoroutine(TypeText(currentText));
+        }
     }
 
     System.Collections.IEnumerator FadeToNextSlide(int index)
     {
         isFading = true;
 
-        // Fade out slide
         while (canvasGroup.alpha > 0f)
         {
             canvasGroup.alpha -= Time.deltaTime * 2f;
@@ -92,7 +104,6 @@ public class IntroController : MonoBehaviour
 
         ShowSlide(index);
 
-        // Fade in slide
         while (canvasGroup.alpha < 1f)
         {
             canvasGroup.alpha += Time.deltaTime * 2f;
@@ -106,14 +117,12 @@ public class IntroController : MonoBehaviour
     {
         isFading = true;
 
-        // Fade out slide
         while (canvasGroup.alpha > 0f)
         {
             canvasGroup.alpha -= Time.deltaTime * 2f;
             yield return null;
         }
 
-        // 🎵 Fade out música (opcional)
         if (bgmSource != null)
         {
             while (bgmSource.volume > 0f)
@@ -125,5 +134,17 @@ public class IntroController : MonoBehaviour
         }
 
         SceneManager.LoadScene(nextSceneName);
+    }
+
+    System.Collections.IEnumerator TypeText(string fullText)
+    {
+        isTyping = true;
+        textUI.text = "";
+        foreach (char c in fullText)
+        {
+            textUI.text += c;
+            yield return new WaitForSeconds(0.03f);
+        }
+        isTyping = false;
     }
 }
