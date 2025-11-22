@@ -30492,6 +30492,18 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 4525101967952716945, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+    - target: {fileID: 4525101967952716945, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+      propertyPath: checkPaddingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525101967952716945, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
+      propertyPath: m_enableExtraPadding
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4584150666476517824, guid: ae88434b2dbd0b26d909c9e49811ab57, type: 3}
       propertyPath: m_SizeDelta.x
       value: 70
