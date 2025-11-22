@@ -148,3 +148,4 @@ public class IntroController : MonoBehaviour
         isTyping = false;
     }
 }
+// 
