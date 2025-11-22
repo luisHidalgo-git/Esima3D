@@ -10,12 +10,13 @@ public class IntroController : MonoBehaviour
     {
         public Sprite image;
         public string text;
-        public float duration = 3f; // segundos por slide
+        public float duration = 3f;
     }
 
     [Header("UI")]
-    public Image imageUI;
-    public TMP_Text textUI;
+    public Image imageUI;               // Imagen del slide
+    public TMP_Text textUI;            // Texto del slide
+    public CanvasGroup canvasGroup;    // CanvasGroup del SlideGroup (imagen + texto)
 
     [Header("Slides")]
     public IntroSlide[] slides;
@@ -24,11 +25,12 @@ public class IntroController : MonoBehaviour
     public string nextSceneName = "GameScene";
 
     [Header("Música de fondo")]
-    public AudioSource bgmSource;       // Fuente de audio para la música
-    public AudioClip backgroundClip;    // Clip de música de fondo
+    public AudioSource bgmSource;
+    public AudioClip backgroundClip;
 
     private int currentIndex = 0;
     private float timer = 0f;
+    private bool isFading = false;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class IntroController : MonoBehaviour
             return;
         }
 
-        // 🎵 Inicia la música de fondo
+        // 🎵 Inicia música de fondo
         if (bgmSource != null && backgroundClip != null)
         {
             bgmSource.clip = backgroundClip;
@@ -55,34 +57,73 @@ public class IntroController : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        if (currentIndex < slides.Length && timer >= slides[currentIndex].duration)
+        if (!isFading && currentIndex < slides.Length && timer >= slides[currentIndex].duration)
         {
             currentIndex++;
-
             if (currentIndex < slides.Length)
             {
-                ShowSlide(currentIndex);
+                StartCoroutine(FadeToNextSlide(currentIndex));
             }
             else
             {
-                // 🎵 Detener música antes de cargar la escena
-                if (bgmSource != null && bgmSource.isPlaying)
-                {
-                    bgmSource.Stop();
-                }
-
-                SceneManager.LoadScene(nextSceneName);
+                StartCoroutine(FadeOutAndLoadScene());
             }
         }
     }
 
     void ShowSlide(int index)
     {
-        if (index >= 0 && index < slides.Length)
+        imageUI.sprite = slides[index].image;
+        textUI.text = slides[index].text;
+        timer = 0f;
+        canvasGroup.alpha = 1f;
+    }
+
+    System.Collections.IEnumerator FadeToNextSlide(int index)
+    {
+        isFading = true;
+
+        // Fade out slide
+        while (canvasGroup.alpha > 0f)
         {
-            imageUI.sprite = slides[index].image;
-            textUI.text = slides[index].text;
-            timer = 0f;
+            canvasGroup.alpha -= Time.deltaTime * 2f;
+            yield return null;
         }
+
+        ShowSlide(index);
+
+        // Fade in slide
+        while (canvasGroup.alpha < 1f)
+        {
+            canvasGroup.alpha += Time.deltaTime * 2f;
+            yield return null;
+        }
+
+        isFading = false;
+    }
+
+    System.Collections.IEnumerator FadeOutAndLoadScene()
+    {
+        isFading = true;
+
+        // Fade out slide
+        while (canvasGroup.alpha > 0f)
+        {
+            canvasGroup.alpha -= Time.deltaTime * 2f;
+            yield return null;
+        }
+
+        // 🎵 Fade out música (opcional)
+        if (bgmSource != null)
+        {
+            while (bgmSource.volume > 0f)
+            {
+                bgmSource.volume -= Time.deltaTime * 0.5f;
+                yield return null;
+            }
+            bgmSource.Stop();
+        }
+
+        SceneManager.LoadScene(nextSceneName);
     }
 }
