@@ -109,3 +109,4 @@ public class PlayerMovement : MonoBehaviour
             staminaBar.fillAmount = currentStamina / maxStamina;
     }
 }
+// 
