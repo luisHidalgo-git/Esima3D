@@ -6292,6 +6292,7 @@ MonoBehaviour:
   ghostDetectClip: {fileID: 8300000, guid: c0a8eec4aa7881eaa99d8bd3e03a7da7, type: 3}
   flashlightOnClip: {fileID: 8300000, guid: 1437d157e053f8934846bb5fe00222cd, type: 3}
   flashlightOffClip: {fileID: 8300000, guid: 1437d157e053f8934846bb5fe00222cd, type: 3}
+  batteryPickupClip: {fileID: 8300000, guid: c83e93c676b65afaea7032d620cfd76a, type: 3}
   backgroundClip: {fileID: 8300000, guid: 1beb75776b0dcecf8b55629e2f810b7c, type: 3}
 --- !u!4 &522705485
 Transform:
