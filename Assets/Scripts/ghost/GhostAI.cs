@@ -231,12 +231,13 @@ public class GhostAI : MonoBehaviour
     }
 
     private void BeginAttack()
-    {
-        isAttacking = true;
-        animator.SetBool("IsAttacking", true);
-        agent.isStopped = true;
-        lastAttackTime = Time.time;
-    }
+{
+    isAttacking = true;
+    agent.isStopped = true;
+    animator.SetTrigger("AttackTrigger");
+    lastAttackTime = Time.time;
+}
+
 
     private void EndAttack()
     {
