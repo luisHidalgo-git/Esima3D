@@ -5,11 +5,11 @@ public class GhostAI : MonoBehaviour
 {
     [Header("Referencias")]
     public Transform player;
+    public LayerMask playerMask;
 
     [Header("Detección")]
     public float detectionRadius = 5f;
     public float attackRadius = 1.5f;
-    public LayerMask playerMask;
 
     [Header("Movimiento")]
     public float walkSpeed = 1.5f;
@@ -33,6 +33,7 @@ public class GhostAI : MonoBehaviour
     private float idleTimer;
     private float lastAttackTime;
     private bool isWalkingRandom;
+    private bool hasPlayedDetectSound = false;
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class GhostAI : MonoBehaviour
         animator = GetComponent<Animator>();
         idleTimer = Random.Range(idleDurationMin, idleDurationMax);
         nextWanderTime = Time.time + Random.Range(wanderIntervalMin, wanderIntervalMax);
+        agent.stoppingDistance = attackRadius * 0.9f;
     }
 
     void Update()
@@ -49,6 +51,12 @@ public class GhostAI : MonoBehaviour
 
         if (playerDetected)
         {
+            if (!hasPlayedDetectSound)
+            {
+                AudioManager.Instance.PlayGhostDetect();
+                hasPlayedDetectSound = true;
+            }
+
             if (distanceToPlayer <= attackRadius)
             {
                 HandleAttack();
@@ -60,6 +68,7 @@ public class GhostAI : MonoBehaviour
         }
         else
         {
+            hasPlayedDetectSound = false;
             WanderOrIdle();
         }
     }
