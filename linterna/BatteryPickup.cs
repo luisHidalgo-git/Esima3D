@@ -10,7 +10,8 @@ public class BatteryPickup : MonoBehaviour
         if (battery != null)
         {
             battery.RechargeBattery(rechargeAmount);
-            Destroy(gameObject); // elimina la pila tras recogerla
+            AudioManager.Instance?.PlayBatteryPickup();
+            Destroy(gameObject);
         }
     }
 }

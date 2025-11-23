@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     [Header("Clips - Linterna")]
     public AudioClip flashlightOnClip;
     public AudioClip flashlightOffClip;
+    public AudioClip batteryPickupClip;
 
     [Header("Clips - BGM")]
     public AudioClip backgroundClip; // 🎵 Música de fondo
@@ -68,4 +69,5 @@ public class AudioManager : MonoBehaviour
     // 🔦 Métodos específicos para la linterna
     public void PlayFlashlightOn() => PlaySound(flashlightOnClip);
     public void PlayFlashlightOff() => PlaySound(flashlightOffClip);
+    public void PlayBatteryPickup() => PlaySound(batteryPickupClip);
 }
