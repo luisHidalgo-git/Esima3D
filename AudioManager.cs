@@ -13,7 +13,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip papelClip;
     public AudioClip puertaClip;
     public AudioClip ghostDetectClip;
-    public AudioClip ghostAttackClip; // 👻 Nuevo clip para ataque del fantasma
 
     [Header("Clips - Linterna")]
     public AudioClip flashlightOnClip;
@@ -66,7 +65,6 @@ public class AudioManager : MonoBehaviour
     public void PlayPaper() => PlaySound(papelClip);
     public void PlayDoor() => PlaySound(puertaClip);
     public void PlayGhostDetect() => PlaySound(ghostDetectClip);
-    public void PlayGhostAttack() => PlaySound(ghostAttackClip); // 👻 Nuevo método
 
     // 🔦 Métodos específicos para la linterna
     public void PlayFlashlightOn() => PlaySound(flashlightOnClip);

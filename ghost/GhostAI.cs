@@ -80,7 +80,6 @@ public class GhostAI : MonoBehaviour
         {
             case GhostState.Wander:
                 HandleWander();
-
                 if (playerInRange)
                 {
                     if (CheckAndConsumeProtection())
@@ -99,7 +98,6 @@ public class GhostAI : MonoBehaviour
 
             case GhostState.Chase:
                 HandleChase(distToPlayer);
-
                 if (!playerInRange)
                 {
                     state = GhostState.Wander;
@@ -227,7 +225,7 @@ public class GhostAI : MonoBehaviour
 
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            animator.SetTrigger("AttackTrigger"); // Trigger en Animator
+            animator.Play("Attack", 0, 0f);
             lastAttackTime = Time.time;
         }
     }
@@ -254,7 +252,6 @@ public class GhostAI : MonoBehaviour
         if (dist <= attackRadius + 0.2f)
         {
             // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
-            AudioManager.Instance?.PlayGhostAttack();
         }
     }
 
