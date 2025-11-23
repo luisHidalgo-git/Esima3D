@@ -3,29 +3,54 @@ using UnityEngine;
 public class GhostSpawner : MonoBehaviour
 {
     [Header("Referencias")]
-    [SerializeField] private GameObject ghostPrefab;
+    [SerializeField] private GhostAI ghostAI;
     [SerializeField] private Transform[] spawnPoints;
 
-    private GameObject currentGhost;
+    private void Awake()
+    {
+        if (ghostAI == null)
+        {
+            ghostAI = GetComponentInChildren<GhostAI>();
+        }
+
+        if (ghostAI != null)
+        {
+            ghostAI.gameObject.SetActive(false);
+        }
+    }
 
     public void SpawnGhost()
     {
-        if (currentGhost != null)
+        if (ghostAI == null)
         {
-            Destroy(currentGhost);
+            Debug.LogWarning("Ghost AI no configurado");
+            return;
+        }
+
+        if (ghostAI.gameObject.activeSelf)
+        {
+            DespawnGhost();
         }
 
         int index = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[index];
 
-        currentGhost = Instantiate(ghostPrefab, spawnPoint.position, spawnPoint.rotation);
+        ghostAI.transform.position = spawnPoint.position;
+        ghostAI.transform.rotation = spawnPoint.rotation;
+        ghostAI.gameObject.SetActive(true);
     }
 
     public void SpawnGhostFarthestFromPlayer(Transform player)
     {
-        if (currentGhost != null)
+        if (ghostAI == null)
         {
-            Destroy(currentGhost);
+            Debug.LogWarning("Ghost AI no configurado");
+            return;
+        }
+
+        if (ghostAI.gameObject.activeSelf)
+        {
+            DespawnGhost();
         }
 
         if (spawnPoints == null || spawnPoints.Length == 0)
@@ -38,7 +63,17 @@ public class GhostSpawner : MonoBehaviour
 
         if (farthestSpawn != null)
         {
-            currentGhost = Instantiate(ghostPrefab, farthestSpawn.position, farthestSpawn.rotation);
+            ghostAI.transform.position = farthestSpawn.position;
+            ghostAI.transform.rotation = farthestSpawn.rotation;
+            ghostAI.gameObject.SetActive(true);
+        }
+    }
+
+    public void DespawnGhost()
+    {
+        if (ghostAI != null && ghostAI.gameObject.activeSelf)
+        {
+            ghostAI.gameObject.SetActive(false);
         }
     }
 

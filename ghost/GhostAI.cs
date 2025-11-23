@@ -267,10 +267,11 @@ public class GhostAI : MonoBehaviour
 
         if (BookManager.Instance != null && BookManager.Instance.ghostSpawner != null)
         {
+            BookManager.Instance.ghostSpawner.DespawnGhost();
             BookManager.Instance.ghostSpawner.SpawnGhostFarthestFromPlayer(player);
         }
 
-        Destroy(gameObject);
+        isProcessingProtection = false;
     }
 
     private void OnDrawGizmosSelected()
