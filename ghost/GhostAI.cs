@@ -286,3 +286,4 @@ public class GhostAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, wanderRadius);
     }
 }
+// 
