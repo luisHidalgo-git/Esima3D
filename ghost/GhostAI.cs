@@ -26,6 +26,7 @@ public class GhostAI : MonoBehaviour
 
     [Header("Protección")]
     public float freezeBeforeDestruction = 0.5f;
+    public float protectionCooldown = 5f;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -34,6 +35,8 @@ public class GhostAI : MonoBehaviour
     private float lastAttackTime;
     private bool isWalkingRandom;
     private bool hasPlayedDetectSound = false;
+    private bool wasPlayerDetectedLastFrame = false;
+    private float lastProtectionCheckTime = -999f;
 
     void Start()
     {
@@ -51,6 +54,17 @@ public class GhostAI : MonoBehaviour
 
         if (playerDetected)
         {
+            if (!wasPlayerDetectedLastFrame && Time.time - lastProtectionCheckTime >= protectionCooldown)
+            {
+                if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
+                {
+                    gameObject.SetActive(false);
+                    lastProtectionCheckTime = Time.time;
+                    wasPlayerDetectedLastFrame = false;
+                    return;
+                }
+            }
+
             if (!hasPlayedDetectSound)
             {
                 AudioManager.Instance.PlayGhostDetect();
@@ -65,10 +79,13 @@ public class GhostAI : MonoBehaviour
             {
                 ChasePlayer();
             }
+
+            wasPlayerDetectedLastFrame = true;
         }
         else
         {
             hasPlayedDetectSound = false;
+            wasPlayerDetectedLastFrame = false;
             WanderOrIdle();
         }
     }
