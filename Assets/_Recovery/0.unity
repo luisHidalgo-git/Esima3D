@@ -2724,6 +2724,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ghost
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 167e0f28af4dc0bbeb6bde1b7c3aa3e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 167e0f28af4dc0bbeb6bde1b7c3aa3e4, type: 3}
       propertyPath: m_Controller
       value: 
@@ -11167,18 +11171,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostAI
   player: {fileID: 1914987185}
-  detectionRadius: 2.7
+  detectionRadius: 2.54
   attackRadius: 0.5
   playerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   walkSpeed: 1.1
   runSpeed: 1.5
   idleDurationMin: 1.2
   idleDurationMax: 3.5
-  wanderRadius: 2.3
-  wanderIntervalMin: 2
-  wanderIntervalMax: 5
+  wanderRadius: 4.45
+  wanderIntervalMin: 0.97
+  wanderIntervalMax: 2.13
   attackCooldown: 1.2
   attackDamage: 10
   freezeBeforeDespawnDuration: 0.5
@@ -12951,6 +12955,10 @@ PrefabInstance:
     - target: {fileID: 6087855639543762777, guid: feb74ea9c2f183902baa17f8c6d9732d, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087855639543762777, guid: feb74ea9c2f183902baa17f8c6d9732d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6116717274721723259, guid: feb74ea9c2f183902baa17f8c6d9732d, type: 3}
       propertyPath: m_Layer
@@ -28342,8 +28350,8 @@ GameObject:
   - component: {fileID: 1914987182}
   - component: {fileID: 1914987186}
   - component: {fileID: 1914987187}
-  - component: {fileID: 1914987188}
   - component: {fileID: 1914987189}
+  - component: {fileID: 1914987190}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -28494,32 +28502,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1914987188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914987181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801c5a4d64556267dbd1d01c66484efb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  walkSpeed: 1.5
-  runSpeed: 2
-  jumpHeight: 0.5
-  gravity: -9.81
-  groundCheck: {fileID: 1604726488}
-  groundDistance: 0.4
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  maxStamina: 5
-  staminaDrainRate: 1
-  staminaRecoveryRate: 0.5
-  requiredStaminaToStartRun: 0.25
-  staminaBar: {fileID: 1597058201632291156}
 --- !u!114 &1914987189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28537,6 +28519,31 @@ MonoBehaviour:
   drainRate: 1
   flashlight: {fileID: 721375542}
   batteryBar: {fileID: 733895733}
+--- !u!114 &1914987190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914987181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d83184a76d809101b149532070e9dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  walkSpeed: 1.5
+  runSpeed: 2.3
+  jumpHeight: 0.5
+  gravity: -9.81
+  groundCheck: {fileID: 1604726488}
+  groundDistance: 0.4
+  groundMask:
+    m_Bits: 8
+  maxStamina: 5
+  staminaDrainRate: 1
+  staminaRecoveryRate: 0.5
+  requiredStaminaToStartRun: 0.25
+  staminaBar: {fileID: 1597058201632291156}
 --- !u!1 &1917552546
 GameObject:
   m_ObjectHideFlags: 0
