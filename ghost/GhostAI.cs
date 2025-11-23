@@ -1,289 +1,147 @@
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
-[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Animator))]
 public class GhostAI : MonoBehaviour
 {
     [Header("Referencias")]
-    [SerializeField] private Transform player;
+    public Transform player;
+    public LayerMask playerMask;
 
     [Header("Detección")]
-    [SerializeField] private float detectionRadius = 12f;
-    [SerializeField] private float attackRadius = 2.2f;
-    [SerializeField] private LayerMask playerMask;
+    public float detectionRadius = 5f;
+    public float attackRadius = 1.5f;
 
     [Header("Movimiento")]
-    [SerializeField] private float walkSpeed = 1.5f;
-    [SerializeField] private float runSpeed = 3.5f;
-    [SerializeField] private float idleDurationMin = 1.2f;
-    [SerializeField] private float idleDurationMax = 3.5f;
-    [SerializeField] private float wanderRadius = 8f;
-    [SerializeField] private float wanderIntervalMin = 2f;
-    [SerializeField] private float wanderIntervalMax = 5f;
+    public float walkSpeed = 1.5f;
+    public float runSpeed = 3f;
+    public float idleDurationMin = 1f;
+    public float idleDurationMax = 2f;
+    public float wanderRadius = 5f;
+    public float wanderIntervalMin = 2f;
+    public float wanderIntervalMax = 5f;
 
     [Header("Ataque")]
-    [SerializeField] private float attackCooldown = 1.2f;
-    [SerializeField] private int attackDamage = 10;
+    public float attackCooldown = 2f;
+    public int attackDamage = 10;
 
     [Header("Protección")]
-    [SerializeField] private float freezeBeforeDespawnDuration = 0.5f;
+    public float freezeBeforeDestruction = 0.5f;
 
     private NavMeshAgent agent;
     private Animator animator;
-
     private float nextWanderTime;
-    private float nextIdleEndTime;
-    private bool isIdling;
-    private bool playerInRange;
-    private bool isAttacking;
+    private float idleTimer;
     private float lastAttackTime;
-
+    private bool isWalkingRandom;
     private bool hasPlayedDetectSound = false;
-    private bool isProcessingProtection = false;
 
-    private enum GhostState { Wander, Chase, Attack }
-    private GhostState state = GhostState.Wander;
-
-    private void Awake()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
-        agent.updateRotation = true;
-        agent.updatePosition = true;
+        idleTimer = Random.Range(idleDurationMin, idleDurationMax);
+        nextWanderTime = Time.time + Random.Range(wanderIntervalMin, wanderIntervalMax);
         agent.stoppingDistance = attackRadius * 0.9f;
-        SetWalkMode();
-
-        ScheduleNextWander();
-        StartIdlePhase();
     }
 
-    private void Update()
+    void Update()
     {
-        if (isProcessingProtection) return;
+        bool playerDetected = Physics.CheckSphere(transform.position, detectionRadius, playerMask);
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (player == null)
+        if (playerDetected)
         {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
-        }
-
-        float distToPlayer = player ? Vector3.Distance(transform.position, player.position) : Mathf.Infinity;
-        playerInRange = distToPlayer <= detectionRadius;
-
-        animator.SetBool("PlayerInRange", playerInRange);
-        animator.SetFloat("Speed", agent.velocity.magnitude);
-
-        switch (state)
-        {
-            case GhostState.Wander:
-                HandleWander();
-                if (playerInRange)
-                {
-                    if (CheckAndConsumeProtection())
-                        return;
-
-                    state = GhostState.Chase;
-                    SetRunMode();
-
-                    if (!hasPlayedDetectSound)
-                    {
-                        AudioManager.Instance?.PlayGhostDetect();
-                        hasPlayedDetectSound = true;
-                    }
-                }
-                break;
-
-            case GhostState.Chase:
-                HandleChase(distToPlayer);
-                if (!playerInRange)
-                {
-                    state = GhostState.Wander;
-                    SetWalkMode();
-                    StartIdlePhase();
-                    hasPlayedDetectSound = false;
-                }
-                else if (distToPlayer <= attackRadius)
-                {
-                    state = GhostState.Attack;
-                }
-                break;
-
-            case GhostState.Attack:
-                HandleAttack(distToPlayer);
-                break;
-        }
-    }
-
-    private void HandleWander()
-    {
-        if (isIdling)
-        {
-            agent.isStopped = true;
-            if (Time.time >= nextIdleEndTime)
+            if (!hasPlayedDetectSound)
             {
-                isIdling = false;
-                agent.isStopped = false;
-                PickRandomWanderDestination();
+                AudioManager.Instance.PlayGhostDetect();
+                hasPlayedDetectSound = true;
             }
-            return;
-        }
 
-        if (!agent.hasPath || agent.remainingDistance <= agent.stoppingDistance)
-        {
-            if (Time.time >= nextWanderTime)
+            if (distanceToPlayer <= attackRadius)
             {
-                if (Random.value < 0.5f)
-                    StartIdlePhase();
-                else
-                    PickRandomWanderDestination();
-
-                ScheduleNextWander();
+                HandleAttack();
             }
-        }
-    }
-
-    private void StartIdlePhase()
-    {
-        isIdling = true;
-        agent.isStopped = true;
-        float idleDur = Random.Range(idleDurationMin, idleDurationMax);
-        nextIdleEndTime = Time.time + idleDur;
-    }
-
-    private void PickRandomWanderDestination()
-    {
-        isIdling = false;
-
-        Vector3 randomDir = Random.insideUnitSphere * wanderRadius;
-        randomDir.y = 0f;
-        Vector3 target = transform.position + randomDir;
-
-        if (NavMesh.SamplePosition(target, out NavMeshHit hit, wanderRadius, NavMesh.AllAreas))
-        {
-            agent.SetDestination(hit.position);
+            else
+            {
+                ChasePlayer();
+            }
         }
         else
         {
-            agent.SetDestination(transform.position + (transform.forward * 1f));
+            hasPlayedDetectSound = false;
+            WanderOrIdle();
         }
     }
 
-    private void ScheduleNextWander()
-    {
-        nextWanderTime = Time.time + Random.Range(wanderIntervalMin, wanderIntervalMax);
-    }
-
-    private void SetWalkMode()
+    void WanderOrIdle()
     {
         agent.speed = walkSpeed;
+
+        if (Time.time >= nextWanderTime)
+        {
+            isWalkingRandom = Random.value > 0.5f;
+
+            if (isWalkingRandom)
+            {
+                Vector3 randomDirection = Random.insideUnitSphere * wanderRadius + transform.position;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randomDirection, out hit, wanderRadius, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                    agent.isStopped = false;
+                }
+            }
+            else
+            {
+                agent.isStopped = true;
+            }
+
+            nextWanderTime = Time.time + Random.Range(wanderIntervalMin, wanderIntervalMax);
+        }
+
+        animator.SetBool("Idle", !isWalkingRandom);
+        animator.SetBool("Walk", isWalkingRandom);
+        animator.SetBool("Run", false);
     }
 
-    private void SetRunMode()
+    void ChasePlayer()
     {
         agent.speed = runSpeed;
-    }
-
-    private void HandleChase(float distToPlayer)
-    {
-        if (player == null) return;
-
-        agent.isStopped = false;
         agent.SetDestination(player.position);
+        agent.isStopped = false;
+
+        animator.SetBool("Run", true);
+        animator.SetBool("Walk", false);
+        animator.SetBool("Idle", false);
     }
 
-    private bool CheckAndConsumeProtection()
+    void HandleAttack()
     {
-        if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
-        {
-            StartCoroutine(RespawnAfterProtection());
-            return true;
-        }
-        return false;
-    }
-
-    private void HandleAttack(float distToPlayer)
-    {
-        if (CheckAndConsumeProtection())
-            return;
-
-        if (distToPlayer > attackRadius)
-        {
-            EndAttack();
-            state = GhostState.Chase;
-            agent.isStopped = false;
-            SetRunMode();
-            return;
-        }
-
-        if (!isAttacking)
-        {
-            BeginAttack();
-        }
+        agent.isStopped = true;
+        animator.SetTrigger("Attack");
 
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            animator.Play("Attack", 0, 0f);
+            // Aquí puedes conectar con el sistema de vida del jugador
+            Debug.Log("El fantasma ataca y causa " + attackDamage + " de daño.");
             lastAttackTime = Time.time;
         }
+
+        animator.SetBool("Run", false);
+        animator.SetBool("Walk", false);
+        animator.SetBool("Idle", false);
     }
 
-    private void BeginAttack()
+    public void DestroyGhost()
     {
-        isAttacking = true;
-        animator.SetBool("IsAttacking", true);
+        StartCoroutine(FreezeAndDestroy());
+    }
+
+    private System.Collections.IEnumerator FreezeAndDestroy()
+    {
         agent.isStopped = true;
-        lastAttackTime = Time.time;
-    }
-
-    private void EndAttack()
-    {
-        isAttacking = false;
-        animator.SetBool("IsAttacking", false);
-    }
-
-    public void DealDamage()
-    {
-        if (player == null) return;
-
-        float dist = Vector3.Distance(transform.position, player.position);
-        if (dist <= attackRadius + 0.2f)
-        {
-            // player.GetComponent<PlayerHealth>()?.ApplyDamage(attackDamage);
-        }
-    }
-
-    private IEnumerator RespawnAfterProtection()
-    {
-        isProcessingProtection = true;
-        agent.isStopped = true;
-        agent.velocity = Vector3.zero;
-        animator.SetBool("IsAttacking", false);
-        animator.SetFloat("Speed", 0f);
-
-        yield return new WaitForSeconds(freezeBeforeDespawnDuration);
-
-        if (BookManager.Instance != null && BookManager.Instance.ghostSpawner != null)
-        {
-            BookManager.Instance.ghostSpawner.DespawnGhost();
-            BookManager.Instance.ghostSpawner.SpawnGhostFarthestFromPlayer(player);
-        }
-
-        isProcessingProtection = false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, wanderRadius);
+        animator.enabled = false;
+        yield return new WaitForSeconds(freezeBeforeDestruction);
+        Destroy(gameObject);
     }
 }
-// 
