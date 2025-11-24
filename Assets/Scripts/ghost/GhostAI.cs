@@ -6,6 +6,7 @@ public class GhostAI : MonoBehaviour
     [Header("Referencias")]
     public Transform player;
     public LayerMask playerMask;
+    public GhostSpawner ghostSpawner;
 
     [Header("Detección")]
     public float detectionRadius = 5f;
@@ -58,9 +59,17 @@ public class GhostAI : MonoBehaviour
             {
                 if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
                 {
-                    gameObject.SetActive(false);
+                    if (ghostSpawner != null)
+                    {
+                        ghostSpawner.RespawnGhostFarthestFromPlayer(player);
+                    }
+                    else
+                    {
+                        gameObject.SetActive(false);
+                    }
                     lastProtectionCheckTime = Time.time;
                     wasPlayerDetectedLastFrame = false;
+                    hasPlayedDetectSound = false;
                     return;
                 }
             }

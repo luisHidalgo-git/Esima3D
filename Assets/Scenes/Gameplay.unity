@@ -11173,11 +11173,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostAI
   player: {fileID: 1914987185}
-  detectionRadius: 2.7
-  attackRadius: 0.5
   playerMask:
     serializedVersion: 2
     m_Bits: 512
+  ghostSpawner: {fileID: 2066046821}
+  detectionRadius: 2.7
+  attackRadius: 0.5
   walkSpeed: 1.5
   runSpeed: 1.7
   idleDurationMin: 1.2
@@ -11188,6 +11189,7 @@ MonoBehaviour:
   attackCooldown: 2
   attackDamage: 10
   freezeBeforeDestruction: 0.5
+  protectionCooldown: 5
 --- !u!95 &791370375
 Animator:
   serializedVersion: 7
