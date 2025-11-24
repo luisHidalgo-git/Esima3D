@@ -978,7 +978,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1549804278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c7c363e377dfb466aa223ad1b70b9f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d79f640eca73f544984b6cf3cf07a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IntroController
   imageUI: {fileID: 2114256852}
@@ -993,17 +993,16 @@ MonoBehaviour:
     text: 
     duration: 3
   - image: {fileID: 21300000, guid: 9acb2080257234598be69d3f4c8f571d, type: 3}
-    text: Alfin, ya es hora de salir, debo llegar a casa rapido, ya es muy tarde
-      y tengo tarea que hacer.
-    duration: 7
+    text: Al fin, ya es hora de salir, debo llegar a casa rapido, ya es muy tarde
+    duration: 5
   - image: {fileID: 21300000, guid: 7b1ff8cc3c62a704a9e2ce87b9a41260, type: 3}
     text: Un momento, no estan mis libros, no los tengo conmigo. Oh no, no creo haberlos
       olvidado, tengo que regresar por ellos.
-    duration: 7
+    duration: 5
   - image: {fileID: 21300000, guid: 1a10095bee56d4423870ccd33b7e5b13, type: 3}
     text: "Pero... la escuela se ve tan diferente de noche, y tengo una mala sensaci\xF3n
       sobre esto."
-    duration: 7
+    duration: 5
   - image: {fileID: 21300000, guid: baccb0d717174460896a494e076a03d9, type: 3}
     text: 
     duration: 1
