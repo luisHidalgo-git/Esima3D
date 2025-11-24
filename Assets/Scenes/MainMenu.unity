@@ -958,6 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5edbdb5c0c309f82837f9cc27b666a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuInicio
+  musicaDeFondo: {fileID: 8300000, guid: 817878e52e96493b6a8d87b86d4c4a7e, type: 3}
 --- !u!1 &1546453546
 GameObject:
   m_ObjectHideFlags: 0
