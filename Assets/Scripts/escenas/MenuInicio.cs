@@ -1,21 +1,20 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : MonoBehaviour
+public class MenuInicio : MonoBehaviour
 {
-    public void PlayGame()
+    public void Jugar()
     {
         SceneManager.LoadScene("Gameplay");
     }
 
-    public void QuitGame()
+    public void Salir()
     {
         Application.Quit();
     }
 
-    public void OpenOptions()
+    public void Opciones()
     {
-        // Aquí puedes abrir un panel de opciones o una nueva escena
         Debug.Log("Opciones abiertas");
     }
 }

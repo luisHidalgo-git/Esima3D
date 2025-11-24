@@ -23,7 +23,7 @@ public class IntroController : MonoBehaviour
     public IntroSlide[] slides;
 
     [Header("Escena siguiente")]
-    public string nextSceneName = "GameScene";
+    public string nextSceneName = "MainMenu";
 
     [Header("Música de fondo")]
     public AudioSource bgmSource;
