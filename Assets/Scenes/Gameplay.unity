@@ -6485,7 +6485,7 @@ MonoBehaviour:
   pasosClip: {fileID: 8300000, guid: fb93081df6230b65bba7b022021d2369, type: 3}
   papelClip: {fileID: 8300000, guid: b17b207b646950baf85f16b78b2e8937, type: 3}
   puertaClip: {fileID: 8300000, guid: 89f4fa6486e2b519a924ef8e4f53548e, type: 3}
-  ghostDetectClip: {fileID: 8300000, guid: c0a8eec4aa7881eaa99d8bd3e03a7da7, type: 3}
+  ghostDetectClip: {fileID: 8300000, guid: 45a913d9a7bd93ef5bdebb8a07bfbf86, type: 3}
   puertaEntradaClip: {fileID: 8300000, guid: bb2a01e71cbb07d29962c884459c1c33, type: 3}
   flashlightOnClip: {fileID: 8300000, guid: 1437d157e053f8934846bb5fe00222cd, type: 3}
   flashlightOffClip: {fileID: 8300000, guid: 1437d157e053f8934846bb5fe00222cd, type: 3}
