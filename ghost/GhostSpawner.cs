@@ -69,6 +69,31 @@ public class GhostSpawner : MonoBehaviour
         }
     }
 
+    public void RespawnGhostFarthestFromPlayer(Transform player)
+    {
+        if (ghostAI == null)
+        {
+            Debug.LogWarning("Ghost AI no configurado");
+            return;
+        }
+
+        if (spawnPoints == null || spawnPoints.Length == 0)
+        {
+            Debug.LogWarning("No hay puntos de spawn configurados");
+            return;
+        }
+
+        Transform farthestSpawn = GetFarthestSpawnPoint(player);
+
+        if (farthestSpawn != null)
+        {
+            ghostAI.gameObject.SetActive(false);
+            ghostAI.transform.position = farthestSpawn.position;
+            ghostAI.transform.rotation = farthestSpawn.rotation;
+            ghostAI.gameObject.SetActive(true);
+        }
+    }
+
     public void DespawnGhost()
     {
         if (ghostAI != null && ghostAI.gameObject.activeSelf)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ActivarPuerta : MonoBehaviour
 {
-    public GameObject puertaEscuela; // Asigna en el inspector
+    public GameObject puertaEscuela;
 
     private bool puertaActivada = false;
 
@@ -11,7 +11,8 @@ public class ActivarPuerta : MonoBehaviour
         if (!puertaActivada && other.CompareTag("Player"))
         {
             puertaEscuela.SetActive(true);
-            puertaActivada = true; // Evita que se active más de una vez
+            AudioManager.Instance.PlayDoorEntrance();
+            puertaActivada = true;
         }
     }
 }
