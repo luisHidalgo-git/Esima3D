@@ -55,7 +55,7 @@ public class GhostAI : MonoBehaviour
 
         if (playerDetected)
         {
-            if (!wasPlayerDetectedLastFrame && Time.time - lastProtectionCheckTime >= protectionCooldown)
+            if (Time.time - lastProtectionCheckTime >= protectionCooldown)
             {
                 if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
                 {
