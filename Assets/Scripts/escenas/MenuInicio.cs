@@ -27,9 +27,4 @@ public class MenuInicio : MonoBehaviour
     {
         Application.Quit();
     }
-
-    public void Opciones()
-    {
-        Debug.Log("Opciones abiertas");
-    }
 }
