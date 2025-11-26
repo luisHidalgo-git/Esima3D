@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class GhostAI : MonoBehaviour
 {
@@ -7,6 +10,8 @@ public class GhostAI : MonoBehaviour
     public Transform player;
     public LayerMask playerMask;
     public GhostSpawner ghostSpawner;
+    public CameraLook playerCamera;
+    public Transform faceTarget;
 
     [Header("Detección")]
     public float detectionRadius = 5f;
@@ -55,7 +60,7 @@ public class GhostAI : MonoBehaviour
 
         if (playerDetected)
         {
-            if (!wasPlayerDetectedLastFrame && Time.time - lastProtectionCheckTime >= protectionCooldown)
+            if (Time.time - lastProtectionCheckTime >= protectionCooldown)
             {
                 if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
                 {
@@ -148,14 +153,34 @@ public class GhostAI : MonoBehaviour
 
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            // Aquí puedes conectar con el sistema de vida del jugador
             Debug.Log("El fantasma ataca y causa " + attackDamage + " de daño.");
             lastAttackTime = Time.time;
+
+            if (playerCamera != null)
+            {
+                Transform targetPoint = faceTarget != null ? faceTarget : transform;
+                playerCamera.LookAtTarget(targetPoint, 0.3f, 1.5f);
+            }
+
+            StartCoroutine(TriggerSceneChange());
         }
 
         animator.SetBool("Run", false);
         animator.SetBool("Walk", false);
         animator.SetBool("Idle", false);
+    }
+
+    IEnumerator TriggerSceneChange()
+    {
+        yield return new WaitForSeconds(0.5f); // espera breve para que se vea el ataque
+        if (ScreenFader.Instance != null)
+        {
+            ScreenFader.Instance.FadeAndLoadScene("LostScene");
+        }
+        else
+        {
+            Debug.LogWarning("ScreenFader.Instance es null. No se puede cambiar de escena.");
+        }
     }
 
     public void DestroyGhost()

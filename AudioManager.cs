@@ -15,6 +15,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip ghostDetectClip;
     public AudioClip puertaEntradaClip;
 
+    [Header("Clips - Fantasma")]
+    public AudioClip ghostRespawnClip; // 🔊 Nuevo clip para respawn
+
     [Header("Clips - Linterna")]
     public AudioClip flashlightOnClip;
     public AudioClip flashlightOffClip;
@@ -67,6 +70,9 @@ public class AudioManager : MonoBehaviour
     public void PlayDoor() => PlaySound(puertaClip);
     public void PlayGhostDetect() => PlaySound(ghostDetectClip);
     public void PlayDoorEntrance() => PlaySound(puertaEntradaClip);
+
+    // 🔊 Fantasma
+    public void PlayGhostRespawn() => PlaySound(ghostRespawnClip);
 
     // 🔦 Métodos específicos para la linterna
     public void PlayFlashlightOn() => PlaySound(flashlightOnClip);
