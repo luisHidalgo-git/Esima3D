@@ -38,6 +38,9 @@ public class GhostSpawner : MonoBehaviour
         ghostAI.transform.position = spawnPoint.position;
         ghostAI.transform.rotation = spawnPoint.rotation;
         ghostAI.gameObject.SetActive(true);
+
+        // 🔊 Sonido de respawn
+        AudioManager.Instance.PlayGhostRespawn();
     }
 
     public void SpawnGhostFarthestFromPlayer(Transform player)
@@ -66,6 +69,9 @@ public class GhostSpawner : MonoBehaviour
             ghostAI.transform.position = farthestSpawn.position;
             ghostAI.transform.rotation = farthestSpawn.rotation;
             ghostAI.gameObject.SetActive(true);
+
+            // 🔊 Sonido de respawn
+            AudioManager.Instance.PlayGhostRespawn();
         }
     }
 
@@ -91,6 +97,9 @@ public class GhostSpawner : MonoBehaviour
             ghostAI.transform.position = farthestSpawn.position;
             ghostAI.transform.rotation = farthestSpawn.rotation;
             ghostAI.gameObject.SetActive(true);
+
+            // 🔊 Sonido de respawn
+            AudioManager.Instance.PlayGhostRespawn();
         }
     }
 
