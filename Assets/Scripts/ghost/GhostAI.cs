@@ -7,6 +7,10 @@ public class GhostAI : MonoBehaviour
     public Transform player;
     public LayerMask playerMask;
     public GhostSpawner ghostSpawner;
+    public CameraLook playerCamera; // referencia al script CameraLook
+
+    [Header("Referencias extra")]
+    public Transform faceTarget; // Empty en la cara del fantasma (opcional)
 
     [Header("Detección")]
     public float detectionRadius = 5f;
@@ -148,9 +152,16 @@ public class GhostAI : MonoBehaviour
 
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            // Aquí puedes conectar con el sistema de vida del jugador
             Debug.Log("El fantasma ataca y causa " + attackDamage + " de daño.");
             lastAttackTime = Time.time;
+
+            // 🔥 Forzar cámara hacia la cara del fantasma
+            if (playerCamera != null)
+            {
+                Transform targetPoint = faceTarget != null ? faceTarget : transform;
+                playerCamera.LookAtTarget(targetPoint, 0.3f, 1.5f); 
+                // el último parámetro es un offset vertical (1.5f ≈ altura de la cara)
+            }
         }
 
         animator.SetBool("Run", false);
