@@ -77,8 +77,13 @@ public class BookInteraction : MonoBehaviour
                 if (PageUIManager.Instance != null)
                     PageUIManager.Instance.ShowNextPage();
 
-                // 🔊 Sonido al recoger con E
                 AudioManager.Instance.PlayPaper();
+
+                if (BookManager.Instance != null && BookManager.Instance.InstanceLibrosCompletados())
+                {
+                    if (GameplayDialogueTriggers.Instance != null)
+                        GameplayDialogueTriggers.Instance.OnAllBooksCollected();
+                }
 
                 gameObject.SetActive(false);
             }

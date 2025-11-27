@@ -11,6 +11,10 @@ public class BatteryPickup : MonoBehaviour
         {
             battery.RechargeBattery(rechargeAmount);
             AudioManager.Instance?.PlayBatteryPickup();
+
+            if (GameplayDialogueTriggers.Instance != null)
+                GameplayDialogueTriggers.Instance.OnBatteryPickup();
+
             Destroy(gameObject);
         }
     }

@@ -39,8 +39,10 @@ public class GhostSpawner : MonoBehaviour
         ghostAI.transform.rotation = spawnPoint.rotation;
         ghostAI.gameObject.SetActive(true);
 
-        // 🔊 Sonido de respawn
         AudioManager.Instance.PlayGhostRespawn();
+
+        if (GameplayDialogueTriggers.Instance != null)
+            GameplayDialogueTriggers.Instance.OnGhostSpawn();
     }
 
     public void SpawnGhostFarthestFromPlayer(Transform player)

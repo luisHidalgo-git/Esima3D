@@ -955,7 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d19443cad7e9359b3b6a08ddaa3e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  dialogueMessage: Para Encender la luz presiona f
+  dialogueMessage: "\xA1No puede ser, la puerta se cerro, no puedo salir!"
   dialogueDuration: 4
   triggerOnce: 1
   triggerType: 0
@@ -23180,7 +23180,6 @@ GameObject:
   - component: {fileID: 1425535319}
   - component: {fileID: 1425535318}
   - component: {fileID: 1425535317}
-  - component: {fileID: 1425535321}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -23293,22 +23292,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425535315}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1425535321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425535315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0d19443cad7e9359b3b6a08ddaa3e42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  dialogueMessage: Vaya, al recoger un bateria mi linterna se recarga
-  dialogueDuration: 4
-  triggerOnce: 1
-  triggerType: 0
 --- !u!1 &1430073296 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9073137441625471437, guid: 66c48ee51e3cad3fb999c199207b549d, type: 3}

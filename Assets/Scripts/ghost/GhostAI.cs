@@ -64,6 +64,9 @@ public class GhostAI : MonoBehaviour
             {
                 if (BookManager.Instance != null && BookManager.Instance.TryConsumeProtection())
                 {
+                    if (GameplayDialogueTriggers.Instance != null)
+                        GameplayDialogueTriggers.Instance.OnProtectionActivated();
+
                     if (ghostSpawner != null)
                     {
                         ghostSpawner.RespawnGhostFarthestFromPlayer(player);
