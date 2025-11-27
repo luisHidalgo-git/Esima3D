@@ -12,7 +12,7 @@ public class DoorInteraction : MonoBehaviour
     public float interactionDistance = 2.5f;
     public float rotationAngle = 90f;
     public float rotationSpeed = 3f;
-    public LayerMask interactionLayer; // Debe incluir DoorHandle
+    public LayerMask interactionLayer;
     public float autoCloseDelay = 3f;
 
     private bool isOpen = false;
@@ -20,6 +20,7 @@ public class DoorInteraction : MonoBehaviour
     private Quaternion closedRotation;
     private Quaternion openRotation;
     private bool ownsPrompt = false;
+    private static bool firstDoorOpened = false;
 
     void Start()
     {
@@ -100,7 +101,6 @@ public class DoorInteraction : MonoBehaviour
                 isOpen = true;
                 isMoving = true;
 
-                // 🔊 Sonido de abrir puerta
                 AudioManager.Instance.PlayDoor();
 
                 if (OpenDoorPromptManager.Instance != null)
@@ -109,6 +109,14 @@ public class DoorInteraction : MonoBehaviour
                 }
 
                 ownsPrompt = false;
+
+                if (!firstDoorOpened)
+                {
+                    if (GameplayDialogueTriggers.Instance != null)
+                        GameplayDialogueTriggers.Instance.OnFirstDoorInteraction();
+                    firstDoorOpened = true;
+                }
+
                 StartCoroutine(AutoCloseDoor());
             }
         }
