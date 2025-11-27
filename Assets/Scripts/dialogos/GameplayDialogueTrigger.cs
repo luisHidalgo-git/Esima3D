@@ -81,7 +81,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownFirstDoor && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Puedo abrir las puertas presionando E. Debo revisar todas las aulas.", 4f);
+            DialogueSystem.Instance.ShowDialogue("Debo revisar todas las aulas.", 4f);
             hasShownFirstDoor = true;
         }
     }
@@ -92,15 +92,6 @@ public class GameplayDialogueTriggers : MonoBehaviour
         {
             DialogueSystem.Instance.ShowDialogue("Que fue eso? Algo no esta bien aqui... Siento una presencia extraña.", 5f);
             hasShownGhostWarning = true;
-        }
-    }
-
-    public void OnFirstRun()
-    {
-        if (!hasShownRunTip && DialogueSystem.Instance != null)
-        {
-            DialogueSystem.Instance.ShowDialogue("Puedo correr manteniendo Shift, pero me cansare rapido.", 3f);
-            hasShownRunTip = true;
         }
     }
 
@@ -128,4 +119,22 @@ public class GameplayDialogueTriggers : MonoBehaviour
             DialogueSystem.Instance.ShowDialogue("Pilas! Justo lo que necesitaba.", 3f);
         }
     }
+    public void OnMovementTutorial()
+{
+    if (!hasShownRunTip && DialogueSystem.Instance != null)
+    {
+        DialogueSystem.Instance.ShowDialogue("Usa W, A, S, D para moverte. Mantén Shift para correr si tienes energía.", 5f);
+        hasShownRunTip = true;
+    }
+}
+
+public void OnFlashlightTutorial()
+{
+    if (!hasShownFlashlightPickup && DialogueSystem.Instance != null)
+    {
+        DialogueSystem.Instance.ShowDialogue("Presiona F para encender o apagar tu linterna. ¡No te quedes en la oscuridad!", 5f);
+        hasShownFlashlightPickup = true;
+    }
+}
+
 }

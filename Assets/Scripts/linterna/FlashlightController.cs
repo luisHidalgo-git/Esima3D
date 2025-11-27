@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class FlashlightController : MonoBehaviour
 {
-    public Light flashlight; // referencia a la luz
+    public Light flashlight;
     private bool isOn = false;
+    private bool hasUsedFlashlight = false;
 
     void Update()
     {
@@ -12,11 +13,17 @@ public class FlashlightController : MonoBehaviour
             isOn = !isOn;
             flashlight.enabled = isOn;
 
-            // 🔊 Llamar al AudioManager
             if (isOn)
                 AudioManager.Instance.PlayFlashlightOn();
             else
                 AudioManager.Instance.PlayFlashlightOff();
+
+            // 🗨️ Mostrar diálogo la primera vez
+            if (!hasUsedFlashlight)
+            {
+                GameplayDialogueTriggers.Instance.OnFlashlightTutorial();
+                hasUsedFlashlight = true;
+            }
         }
     }
 }

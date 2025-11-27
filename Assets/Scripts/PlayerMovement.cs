@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private float currentStamina;
     private bool isRunning;
+    private bool hasMoved = false;
 
-    // 🔊 Sonidos
     private float footstepTimer = 0f;
 
     void Start()
@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Detección de suelo
         RaycastHit hit;
         bool grounded = Physics.Raycast(
             groundCheck.position,
@@ -54,13 +53,19 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
-        // Movimiento
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         Vector3 move = transform.right * x + transform.forward * z;
 
         bool wantsToRun = Input.GetKey(KeyCode.LeftShift);
         bool isMoving = move.magnitude > 0.1f;
+
+        // 🗨️ Mostrar diálogo al primer movimiento
+        if (!hasMoved && isMoving)
+        {
+            GameplayDialogueTriggers.Instance.OnMovementTutorial();
+            hasMoved = true;
+        }
 
         if (isRunning)
         {
@@ -75,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
         float speed = isRunning ? runSpeed : walkSpeed;
         controller.Move(move * speed * Time.deltaTime);
 
-        // 🔊 Pasos
         if (isGrounded && isMoving)
         {
             footstepTimer -= Time.deltaTime;
@@ -86,18 +90,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Saltar
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            // (Opcional: puedes añadir un sonido de salto si lo deseas)
         }
 
-        // Gravedad
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // Stamina
         if (isRunning)
             currentStamina -= staminaDrainRate * Time.deltaTime;
         else
@@ -109,4 +109,3 @@ public class PlayerMovement : MonoBehaviour
             staminaBar.fillAmount = currentStamina / maxStamina;
     }
 }
-// 
