@@ -15310,8 +15310,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -123.867874, y: -3.5233}
-  m_SizeDelta: {x: 1613.5695, y: 582.0015}
+  m_AnchoredPosition: {x: 9.896, y: 4.812}
+  m_SizeDelta: {x: 2282.426, y: 1087.547}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879194536
 MonoBehaviour:
@@ -23155,7 +23155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameplayDialogueTriggers
   flashlightBattery: {fileID: 1914987189}
   playerMovement: {fileID: 1914987188}
+  flashlightController: {fileID: 0}
   lowBatteryThreshold: 25
+  tutorialDialogueDuration: 5
 --- !u!1 &1417863553
 GameObject:
   m_ObjectHideFlags: 0

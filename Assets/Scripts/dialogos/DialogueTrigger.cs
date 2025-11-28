@@ -51,7 +51,8 @@ public class DialogueTrigger : MonoBehaviour
 
         if (DialogueSystem.Instance != null && !string.IsNullOrEmpty(dialogueMessage))
         {
-            DialogueSystem.Instance.ShowDialogue(dialogueMessage, dialogueDuration);
+            string dialogueId = "trigger_" + gameObject.GetInstanceID();
+            DialogueSystem.Instance.ShowDialogue(dialogueMessage, dialogueDuration, dialogueId);
             hasTriggered = true;
 
             if (triggerOnce)

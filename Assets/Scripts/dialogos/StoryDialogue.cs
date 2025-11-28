@@ -47,13 +47,13 @@ public class StoryDialogues : MonoBehaviour
 
         if (DialogueSystem.Instance != null)
         {
-            yield return StartCoroutine(ShowDialogueWithWait("Ya es tarde... Todos se fueron. Pero olvide mis libros por toda la escuela.", dialogueDuration));
+            yield return StartCoroutine(ShowDialogueWithWait("Ya es tarde... Todos se fueron. Pero olvide mis libros por toda la escuela.", dialogueDuration, "story_intro1"));
             yield return new WaitForSeconds(delayBetweenDialogues);
 
-            yield return StartCoroutine(ShowDialogueWithWait("Tengo un mal presentimiento sobre esto. La escuela se siente... diferente de noche.", dialogueDuration));
+            yield return StartCoroutine(ShowDialogueWithWait("Tengo un mal presentimiento sobre esto. La escuela se siente... diferente de noche.", dialogueDuration, "story_intro2"));
             yield return new WaitForSeconds(delayBetweenDialogues);
 
-            yield return StartCoroutine(ShowDialogueWithWait("Debo apresurarme. Cuanto antes encuentre mis libros, antes podre salir de aqui.", dialogueDuration));
+            yield return StartCoroutine(ShowDialogueWithWait("Debo apresurarme. Cuanto antes encuentre mis libros, antes podre salir de aqui.", dialogueDuration, "story_intro3"));
         }
 
         hasShownInitialDialogues = true;
@@ -65,9 +65,9 @@ public class StoryDialogues : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowDialogueWithWait(string message, float duration)
+    private IEnumerator ShowDialogueWithWait(string message, float duration, string dialogueId = "")
     {
-        DialogueSystem.Instance.ShowDialogue(message, duration);
+        DialogueSystem.Instance.ShowDialogue(message, duration, dialogueId);
 
         float typingTime = message.Length * DialogueSystem.Instance.typingSpeed;
         yield return new WaitForSeconds(typingTime + duration + 0.5f);
@@ -93,17 +93,13 @@ public class StoryDialogues : MonoBehaviour
 
         if (!hasShownTwoBookDialogue && currentBooks >= 2)
         {
-            if (dialogueQueueCoroutine != null)
-                StopCoroutine(dialogueQueueCoroutine);
-            dialogueQueueCoroutine = StartCoroutine(ShowDialogueWithWait("Estos pasillos parecen mas largos de noche. O sera mi imaginacion?", dialogueDuration));
+            DialogueSystem.Instance.ShowDialogue("Estos pasillos parecen mas largos de noche. O sera mi imaginacion?", dialogueDuration, "story_twobooks");
             hasShownTwoBookDialogue = true;
         }
 
         if (!hasShownHalfBookDialogue && currentBooks >= (totalBooks / 2))
         {
-            if (dialogueQueueCoroutine != null)
-                StopCoroutine(dialogueQueueCoroutine);
-            dialogueQueueCoroutine = StartCoroutine(ShowDialogueWithWait("No puedo dejar de pensar en las historias que contaban sobre esta escuela...", dialogueDuration));
+            DialogueSystem.Instance.ShowDialogue("No puedo dejar de pensar en las historias que contaban sobre esta escuela...", dialogueDuration, "story_halfbooks");
             hasShownHalfBookDialogue = true;
         }
     }

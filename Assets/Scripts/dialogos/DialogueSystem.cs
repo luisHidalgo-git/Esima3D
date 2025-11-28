@@ -15,6 +15,7 @@ public class DialogueSystem : MonoBehaviour
     private bool isTyping = false;
     private bool isShowingDialogue = false;
     private Coroutine currentDialogueCoroutine;
+    private string currentDialogueId = "";
 
     void Awake()
     {
@@ -27,7 +28,6 @@ public class DialogueSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Asegura que panel y texto estén desactivados al inicio
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
 
@@ -35,12 +35,18 @@ public class DialogueSystem : MonoBehaviour
             dialogueText.gameObject.SetActive(false);
     }
 
-    public void ShowDialogue(string message, float duration = -1f)
+    public bool IsShowingDialogue()
+    {
+        return isShowingDialogue;
+    }
+
+    public void ShowDialogue(string message, float duration = -1f, string dialogueId = "")
     {
         if (currentDialogueCoroutine != null)
             StopCoroutine(currentDialogueCoroutine);
 
-        // Activar panel y texto si están desactivados
+        currentDialogueId = dialogueId;
+
         if (dialoguePanel != null && !dialoguePanel.activeSelf)
             dialoguePanel.SetActive(true);
 
@@ -50,17 +56,23 @@ public class DialogueSystem : MonoBehaviour
         dialogueText.text = "";
 
         float finalDuration = duration > 0 ? duration : dialogueDuration;
-        currentDialogueCoroutine = StartCoroutine(DisplayDialogue(message, finalDuration));
+        currentDialogueCoroutine = StartCoroutine(DisplayDialogue(message, finalDuration, dialogueId));
     }
 
-    private IEnumerator DisplayDialogue(string message, float duration)
+    private IEnumerator DisplayDialogue(string message, float duration, string dialogueId)
     {
         isShowingDialogue = true;
 
-        yield return StartCoroutine(TypeText(message));
+        yield return StartCoroutine(TypeText(message, dialogueId));
+
+        if (currentDialogueId != dialogueId)
+            yield break;
+
         yield return new WaitForSeconds(duration);
 
-        // Ocultar panel y texto al terminar
+        if (currentDialogueId != dialogueId)
+            yield break;
+
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
 
@@ -69,15 +81,22 @@ public class DialogueSystem : MonoBehaviour
 
         dialogueText.text = "";
         isShowingDialogue = false;
+        currentDialogueId = "";
     }
 
-    private IEnumerator TypeText(string text)
+    private IEnumerator TypeText(string text, string dialogueId)
     {
         isTyping = true;
         dialogueText.text = "";
 
         foreach (char c in text)
         {
+            if (currentDialogueId != dialogueId)
+            {
+                isTyping = false;
+                yield break;
+            }
+
             dialogueText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -98,5 +117,6 @@ public class DialogueSystem : MonoBehaviour
 
         dialogueText.text = "";
         isShowingDialogue = false;
+        currentDialogueId = "";
     }
 }

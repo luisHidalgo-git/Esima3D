@@ -60,7 +60,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         if (!hasShownFlashlightLowBattery && flashlightBattery.currentBattery <= lowBatteryThreshold && flashlightBattery.currentBattery > 0)
         {
-            DialogueSystem.Instance.ShowDialogue("La bateria esta baja... Necesito encontrar mas pilas rapido.", 4f);
+            DialogueSystem.Instance.ShowDialogue("La bateria esta baja... Necesito encontrar mas pilas rapido.", 4f, "gameplay_lowbattery");
             hasShownFlashlightLowBattery = true;
         }
     }
@@ -72,9 +72,13 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         int currentBooks = BookManager.Instance.InstanceLibrosCompletados() ? 8 : 0;
 
-        if (!hasShownFirstBook && currentBooks > lastBookCount && lastBookCount == 0)
+        if (currentBooks == 8 && lastBookCount < 8)
         {
-            DialogueSystem.Instance.ShowDialogue("Un libro mas recuperado. Debo encontrar el resto antes de que sea demasiado tarde...", 4f);
+            DialogueSystem.Instance.ShowDialogue("Tengo todos mis libros! Ahora debo salir de aqui lo mas rapido posible!", 5f, "gameplay_allbooks");
+        }
+        else if (!hasShownFirstBook && currentBooks > 0 && lastBookCount == 0)
+        {
+            DialogueSystem.Instance.ShowDialogue("Un libro mas recuperado. Debo encontrar el resto antes de que sea demasiado tarde...", 4f, "gameplay_firstbook");
             hasShownFirstBook = true;
         }
 
@@ -85,7 +89,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownFlashlightPickup && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Al menos tengo mi linterna. Presiona F para encenderla o apagarla.", 4f);
+            DialogueSystem.Instance.ShowDialogue("Al menos tengo mi linterna. Presiona F para encenderla o apagarla.", 4f, "gameplay_flashlightfirst");
             hasShownFlashlightPickup = true;
         }
     }
@@ -94,7 +98,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownFirstDoor && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Debo revisar todas las aulas.", 4f);
+            DialogueSystem.Instance.ShowDialogue("Debo revisar todas las aulas.", 4f, "gameplay_firstdoor");
             hasShownFirstDoor = true;
         }
     }
@@ -103,7 +107,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownGhostWarning && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Que fue eso? Algo no esta bien aqui... Siento una presencia extraña.", 5f);
+            DialogueSystem.Instance.ShowDialogue("Que fue eso? Algo no esta bien aqui... Siento una presencia extraña.", 5f, "gameplay_ghostspawn");
             hasShownGhostWarning = true;
         }
     }
@@ -112,31 +116,31 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownProtectionInfo && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Los libros me protegieron! Cada libro que recoja me dara una oportunidad mas.", 5f);
+            DialogueSystem.Instance.ShowDialogue("Los libros me protegieron! Cada libro que recoja me dara una oportunidad mas.", 5f, "gameplay_protection");
             hasShownProtectionInfo = true;
         }
     }
 
-    public void OnAllBooksCollected()
-    {
-        if (DialogueSystem.Instance != null)
-        {
-            DialogueSystem.Instance.ShowDialogue("Tengo todos mis libros! Ahora debo salir de aqui lo mas rapido posible!", 5f);
-        }
-    }
+    // public void OnAllBooksCollected()
+    // {
+    //     if (DialogueSystem.Instance != null)
+    //     {
+    //         DialogueSystem.Instance.ShowDialogue("Tengo todos mis libros! Ahora debo salir de aqui lo mas rapido posible!", 5f, "gameplay_allbooks");
+    //     }
+    // }
 
     public void OnBatteryPickup()
     {
         if (DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Pilas! Justo lo que necesitaba.", 3f);
+            DialogueSystem.Instance.ShowDialogue("Pilas! Justo lo que necesitaba.", 3f, "gameplay_batterypickup");
         }
     }
     public void OnMovementTutorial()
     {
         if (!hasShownRunTip && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Usa W, A, S, D para moverte. Mantén Shift para correr si tienes energía.", 5f);
+            DialogueSystem.Instance.ShowDialogue("Usa W, A, S, D para moverte. Mantén Shift para correr si tienes energía.", 5f, "gameplay_movement");
             hasShownRunTip = true;
         }
     }
@@ -145,7 +149,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownFlashlightPickup && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Presiona F para encender o apagar tu linterna. ¡No te quedes en la oscuridad!", 5f);
+            DialogueSystem.Instance.ShowDialogue("Presiona F para encender o apagar tu linterna. ¡No te quedes en la oscuridad!", 5f, "gameplay_flashlighttutorial");
             hasShownFlashlightPickup = true;
         }
     }
@@ -183,7 +187,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         if (DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Usa W, A, S, D para moverte. Mantén Shift para correr si tienes energía.", tutorialDialogueDuration);
+            DialogueSystem.Instance.ShowDialogue("Usa W, A, S, D para moverte. Mantén Shift para correr si tienes energía.", tutorialDialogueDuration, "tutorial_movement");
         }
 
         movementTutorialShown = true;
@@ -194,7 +198,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         if (DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Presiona F para encender o apagar tu linterna. ¡No te quedes en la oscuridad!", tutorialDialogueDuration);
+            DialogueSystem.Instance.ShowDialogue("Presiona F para encender o apagar tu linterna. ¡No te quedes en la oscuridad!", tutorialDialogueDuration, "tutorial_flashlight");
         }
 
         flashlightTutorialShown = true;
