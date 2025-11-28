@@ -16,6 +16,8 @@ public class StoryDialogues : MonoBehaviour
 
     private Coroutine dialogueQueueCoroutine;
 
+    public bool IsShowingInitialDialogues { get; private set; } = true;
+
     void Awake()
     {
         if (Instance == null)
@@ -40,6 +42,7 @@ public class StoryDialogues : MonoBehaviour
 
     private IEnumerator ShowInitialDialogues()
     {
+        IsShowingInitialDialogues = true;
         yield return new WaitForSeconds(initialDelay);
 
         if (DialogueSystem.Instance != null)
@@ -54,6 +57,12 @@ public class StoryDialogues : MonoBehaviour
         }
 
         hasShownInitialDialogues = true;
+        IsShowingInitialDialogues = false;
+
+        if (GameplayDialogueTriggers.Instance != null)
+        {
+            GameplayDialogueTriggers.Instance.StartTutorialSequence();
+        }
     }
 
     private IEnumerator ShowDialogueWithWait(string message, float duration)
