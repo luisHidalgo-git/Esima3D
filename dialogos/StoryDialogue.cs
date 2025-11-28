@@ -1,34 +1,101 @@
 using UnityEngine;
+using System.Collections;
 
 public class StoryDialogues : MonoBehaviour
 {
-    [Header("Story Dialogue Messages")]
-    [TextArea(3, 10)]
-    public string[] storyDialogues = new string[]
-    {
-        "Ya es tarde... Todos se fueron. Pero olvide mis libros en el salon.",
-        "Tengo un mal presentimiento sobre esto. La escuela se siente... diferente de noche.",
-        "Debo apresurarme. Cuanto antes encuentre mis libros, antes podre salir de aqui.",
-        "Por que siento que alguien me esta observando?",
-        "Estos pasillos parecen mas largos de noche. O sera mi imaginacion?",
-        "No puedo dejar de pensar en las historias que contaban sobre esta escuela...",
-        "Concentremonos. Solo necesito mis libros y salir de aqui."
-    };
+    public static StoryDialogues Instance;
 
-    public void TriggerStoryDialogue(int index)
+    [Header("Timing")]
+    public float dialogueDuration = 5f;
+    public float delayBetweenDialogues = 1f;
+    public float initialDelay = 2f;
+
+    private bool hasShownInitialDialogues = false;
+    private bool hasShownTwoBookDialogue = false;
+    private bool hasShownHalfBookDialogue = false;
+
+    private Coroutine dialogueQueueCoroutine;
+
+    void Awake()
     {
-        if (DialogueSystem.Instance != null && index >= 0 && index < storyDialogues.Length)
+        if (Instance == null)
         {
-            DialogueSystem.Instance.ShowDialogue(storyDialogues[index], 5f);
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    public void TriggerRandomStoryDialogue()
+    void Start()
     {
-        if (DialogueSystem.Instance != null && storyDialogues.Length > 0)
+        StartCoroutine(ShowInitialDialogues());
+    }
+
+    void Update()
+    {
+        CheckBookProgress();
+    }
+
+    private IEnumerator ShowInitialDialogues()
+    {
+        yield return new WaitForSeconds(initialDelay);
+
+        if (DialogueSystem.Instance != null)
         {
-            int randomIndex = Random.Range(0, storyDialogues.Length);
-            DialogueSystem.Instance.ShowDialogue(storyDialogues[randomIndex], 5f);
+            yield return StartCoroutine(ShowDialogueWithWait("Ya es tarde... Todos se fueron. Pero olvide mis libros por toda la escuela.", dialogueDuration));
+            yield return new WaitForSeconds(delayBetweenDialogues);
+
+            yield return StartCoroutine(ShowDialogueWithWait("Tengo un mal presentimiento sobre esto. La escuela se siente... diferente de noche.", dialogueDuration));
+            yield return new WaitForSeconds(delayBetweenDialogues);
+
+            yield return StartCoroutine(ShowDialogueWithWait("Debo apresurarme. Cuanto antes encuentre mis libros, antes podre salir de aqui.", dialogueDuration));
+        }
+
+        hasShownInitialDialogues = true;
+    }
+
+    private IEnumerator ShowDialogueWithWait(string message, float duration)
+    {
+        DialogueSystem.Instance.ShowDialogue(message, duration);
+
+        float typingTime = message.Length * DialogueSystem.Instance.typingSpeed;
+        yield return new WaitForSeconds(typingTime + duration + 0.5f);
+    }
+
+    private void CheckBookProgress()
+    {
+        if (BookManager.Instance == null || DialogueSystem.Instance == null || !hasShownInitialDialogues)
+            return;
+
+        int currentBooks = 0;
+        int totalBooks = 8;
+
+        if (BookManager.Instance.BooksCounterText != null)
+        {
+            string[] parts = BookManager.Instance.BooksCounterText.text.Split('/');
+            if (parts.Length == 2)
+            {
+                int.TryParse(parts[0], out currentBooks);
+                int.TryParse(parts[1], out totalBooks);
+            }
+        }
+
+        if (!hasShownTwoBookDialogue && currentBooks >= 2)
+        {
+            if (dialogueQueueCoroutine != null)
+                StopCoroutine(dialogueQueueCoroutine);
+            dialogueQueueCoroutine = StartCoroutine(ShowDialogueWithWait("Estos pasillos parecen mas largos de noche. O sera mi imaginacion?", dialogueDuration));
+            hasShownTwoBookDialogue = true;
+        }
+
+        if (!hasShownHalfBookDialogue && currentBooks >= (totalBooks / 2))
+        {
+            if (dialogueQueueCoroutine != null)
+                StopCoroutine(dialogueQueueCoroutine);
+            dialogueQueueCoroutine = StartCoroutine(ShowDialogueWithWait("No puedo dejar de pensar en las historias que contaban sobre esta escuela...", dialogueDuration));
+            hasShownHalfBookDialogue = true;
         }
     }
 }
