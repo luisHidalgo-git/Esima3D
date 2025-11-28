@@ -53,6 +53,19 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
+        bool canMove = GameplayDialogueTriggers.Instance != null && GameplayDialogueTriggers.Instance.CanPlayerMove();
+
+        if (!canMove)
+        {
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+
+            if (staminaBar != null)
+                staminaBar.fillAmount = currentStamina / maxStamina;
+
+            return;
+        }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         Vector3 move = transform.right * x + transform.forward * z;
@@ -60,10 +73,8 @@ public class PlayerMovement : MonoBehaviour
         bool wantsToRun = Input.GetKey(KeyCode.LeftShift);
         bool isMoving = move.magnitude > 0.1f;
 
-        // 🗨️ Mostrar diálogo al primer movimiento
         if (!hasMoved && isMoving)
         {
-            GameplayDialogueTriggers.Instance.OnMovementTutorial();
             hasMoved = true;
         }
 

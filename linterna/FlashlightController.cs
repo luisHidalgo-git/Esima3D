@@ -8,6 +8,11 @@ public class FlashlightController : MonoBehaviour
 
     void Update()
     {
+        bool canUseFlashlight = GameplayDialogueTriggers.Instance != null && GameplayDialogueTriggers.Instance.CanUseFlashlight();
+
+        if (!canUseFlashlight)
+            return;
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             isOn = !isOn;
@@ -18,10 +23,8 @@ public class FlashlightController : MonoBehaviour
             else
                 AudioManager.Instance.PlayFlashlightOff();
 
-            // 🗨️ Mostrar diálogo la primera vez
             if (!hasUsedFlashlight)
             {
-                GameplayDialogueTriggers.Instance.OnFlashlightTutorial();
                 hasUsedFlashlight = true;
             }
         }
