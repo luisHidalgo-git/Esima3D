@@ -18,6 +18,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     private bool hasShownGhostWarning = false;
     private bool hasShownRunTip = false;
     private bool hasShownProtectionInfo = false;
+    private bool hasShownAllBooksCollected = false;
 
     [Header("Battery Thresholds")]
     public float lowBatteryThreshold = 25f;
@@ -60,7 +61,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         if (!hasShownFlashlightLowBattery && flashlightBattery.currentBattery <= lowBatteryThreshold && flashlightBattery.currentBattery > 0)
         {
-            DialogueSystem.Instance.ShowDialogue("La bateria esta baja... Necesito encontrar mas pilas rapido.", 4f, "gameplay_lowbattery");
+            DialogueSystem.Instance.ShowDialogue("La batería está baja... Necesito encontrar más pilas rápido.", 4f, "gameplay_lowbattery");
             hasShownFlashlightLowBattery = true;
         }
     }
@@ -72,13 +73,13 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         int currentBooks = BookManager.Instance.InstanceLibrosCompletados() ? 8 : 0;
 
-        if (currentBooks == 8 && lastBookCount < 8)
+        if (currentBooks == 8 && lastBookCount < 8 && !hasShownAllBooksCollected)
         {
-            DialogueSystem.Instance.ShowDialogue("Tengo todos mis libros! Ahora debo salir de aqui lo mas rapido posible!", 5f, "gameplay_allbooks");
+            OnAllBooksCollected();
         }
         else if (!hasShownFirstBook && currentBooks > 0 && lastBookCount == 0)
         {
-            DialogueSystem.Instance.ShowDialogue("Un libro mas recuperado. Debo encontrar el resto antes de que sea demasiado tarde...", 4f, "gameplay_firstbook");
+            DialogueSystem.Instance.ShowDialogue("Un libro más recuperado. Debo encontrar el resto antes de que sea demasiado tarde...", 4f, "gameplay_firstbook");
             hasShownFirstBook = true;
         }
 
@@ -107,7 +108,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownGhostWarning && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Que fue eso? Algo no esta bien aqui... Siento una presencia extraña.", 5f, "gameplay_ghostspawn");
+            DialogueSystem.Instance.ShowDialogue("¿Qué fue eso? Algo no está bien aquí... Siento una presencia extraña.", 5f, "gameplay_ghostspawn");
             hasShownGhostWarning = true;
         }
     }
@@ -116,26 +117,28 @@ public class GameplayDialogueTriggers : MonoBehaviour
     {
         if (!hasShownProtectionInfo && DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Los libros me protegieron! Cada libro que recoja me dara una oportunidad mas.", 5f, "gameplay_protection");
+            DialogueSystem.Instance.ShowDialogue("¡Los libros me protegieron! Cada libro que recoja me dará una oportunidad más.", 5f, "gameplay_protection");
             hasShownProtectionInfo = true;
         }
     }
 
-    // public void OnAllBooksCollected()
-    // {
-    //     if (DialogueSystem.Instance != null)
-    //     {
-    //         DialogueSystem.Instance.ShowDialogue("Tengo todos mis libros! Ahora debo salir de aqui lo mas rapido posible!", 5f, "gameplay_allbooks");
-    //     }
-    // }
+    public void OnAllBooksCollected()
+    {
+        if (!hasShownAllBooksCollected && DialogueSystem.Instance != null)
+        {
+            DialogueSystem.Instance.ShowDialogue("¡Tengo todos mis libros! Ahora debo salir de aquí lo más rápido posible!", 5f, "gameplay_allbooks");
+            hasShownAllBooksCollected = true;
+        }
+    }
 
     public void OnBatteryPickup()
     {
         if (DialogueSystem.Instance != null)
         {
-            DialogueSystem.Instance.ShowDialogue("Pilas! Justo lo que necesitaba.", 3f, "gameplay_batterypickup");
+            DialogueSystem.Instance.ShowDialogue("¡Pilas! Justo lo que necesitaba.", 3f, "gameplay_batterypickup");
         }
     }
+
     public void OnMovementTutorial()
     {
         if (!hasShownRunTip && DialogueSystem.Instance != null)
@@ -206,5 +209,4 @@ public class GameplayDialogueTriggers : MonoBehaviour
 
         tutorialInProgress = false;
     }
-
 }
