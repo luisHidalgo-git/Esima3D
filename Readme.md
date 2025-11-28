@@ -10,7 +10,6 @@ Un juego clásico de terror ambientado en una escuela, debes adentrarte a las in
 ---
 
 ## 🖼️ Capturas de Pantalla
-Incluye imágenes o GIFs del gameplay para mostrar la experiencia visual:
 
 ![Gameplay 1](images/image1.png)  
 ![Gameplay 2](images/image2.png)
@@ -27,11 +26,11 @@ Incluye imágenes o GIFs del gameplay para mostrar la experiencia visual:
 ---
 
 ## 🛠️ Tecnologías Utilizadas
-| Tecnología | Versión | Uso |
-|------------|---------|-----|
-| Unity      | 2021.3 LTS | Motor principal |
-| C#         | -       | Scripts |
-| TextMeshPro| -       | UI avanzada |
-| Cinemachine| -       | Control de cámara |
+| Tecnología | Uso |
+|------------|-----|
+| Unity      | Motor principal |
+| C#         | Scripts |
+| TextMeshPro| UI avanzada |
+| Cinemachine| Control de cámara |
 
 ---
