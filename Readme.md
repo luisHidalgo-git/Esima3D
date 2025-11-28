@@ -1,22 +1,19 @@
 # 🎮 Esimaldar
 
 ![Logo del Juego](images/Esimaldarnobackground.png)  
-*(Coloca aquí tu logo o imagen representativa en la carpeta `docs/images/`)*
 
 ---
 
 ## 📖 Descripción
-Breve introducción al juego: género, temática, objetivo principal y lo que lo hace único.  
-Ejemplo: *"Survival horror en primera persona con mecánicas de exploración y puzzles."*
+Un juego clásico de terror ambientado en una escuela, debes adentrarte a las instalaciones durante la noche para poder recuperar tus libros que has olvidado, pero te das cuenta que mientras más permaneces dentro, cosas sobrenaturales suceden y debes mantenerte alerta.
 
 ---
 
 ## 🖼️ Capturas de Pantalla
 Incluye imágenes o GIFs del gameplay para mostrar la experiencia visual:
 
-![Gameplay 1](docs/screenshots/gameplay1.png)  
-![Gameplay 2](docs/screenshots/gameplay2.png)  
-![GIF Animado](docs/gifs/demo.gif)
+![Gameplay 1](images/image1.png)  
+![Gameplay 2](images/image2.png)
 
 ---
 
@@ -24,8 +21,8 @@ Incluye imágenes o GIFs del gameplay para mostrar la experiencia visual:
 - ✅ Mecánicas de juego destacadas
 - 🎥 Sistema de cámara dinámico
 - 🔊 Audio inmersivo con transiciones suaves
-- 🌍 Escenarios 3D detallados
-- 🕹️ Compatible con teclado, mando y VR
+- 🌍 Escenarios 3D
+- 🕹️ Compatible con teclado
 
 ---
 
@@ -38,12 +35,3 @@ Incluye imágenes o GIFs del gameplay para mostrar la experiencia visual:
 | Cinemachine| -       | Control de cámara |
 
 ---
-
-## 📂 Estructura del Proyecto
-```plaintext
-Assets/
- ├── Scenes/         # Escenas principales
- ├── Prefabs/        # Objetos reutilizables
- ├── Scripts/        # Lógica del juego
- ├── UI/             # Interfaces gráficas
- └── Audio/          # Música y efectos
