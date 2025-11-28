@@ -79,7 +79,7 @@ public class GameplayDialogueTriggers : MonoBehaviour
         }
         else if (!hasShownFirstBook && currentBooks > 0 && lastBookCount == 0)
         {
-            DialogueSystem.Instance.ShowDialogue("Un libro más recuperado. Debo encontrar el resto antes de que sea demasiado tarde...", 4f, "gameplay_firstbook");
+            DialogueSystem.Instance.ShowDialogue("¡Tengo todos mis libros! Ahora debo salir de aquí lo más rápido posible!", 4f, "gameplay_firstbook");
             hasShownFirstBook = true;
         }
 
