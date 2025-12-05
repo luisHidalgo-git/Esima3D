@@ -4,6 +4,10 @@
 
 ---
 
+📥 [Descargar Juego en](https://drive.google.com/file/d/1m1wcL72vH_sKM3ImQoGRBotDLBgKOnl6/view?usp=drive_link)
+
+---
+
 ## 📖 Descripción
 Un juego clásico de terror ambientado en una escuela, debes adentrarte a las instalaciones durante la noche para poder recuperar tus libros que has olvidado, pero te das cuenta que mientras más permaneces dentro, cosas sobrenaturales suceden y debes mantenerte alerta.
 
