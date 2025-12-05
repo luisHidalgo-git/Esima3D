@@ -4,7 +4,7 @@
 
 ---
 
-📥 [Descargar Juego en](https://drive.google.com/file/d/1m1wcL72vH_sKM3ImQoGRBotDLBgKOnl6/view?usp=drive_link)
+📥 [Descargar Juego](https://drive.google.com/file/d/1m1wcL72vH_sKM3ImQoGRBotDLBgKOnl6/view?usp=drive_link)
 
 ---
 
